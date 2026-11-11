@@ -1,141 +1,122 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 
 interface Particle {
-  id: number;
   x: number;
   y: number;
-  type: 'heart' | 'sparkle' | 'rose';
   size: number;
-  rotation: number;
   opacity: number;
   color: string;
 }
 
-export const HeartCursorTrail: React.FC = () => {
-  const [particles, setParticles] = useState<Particle[]>([]);
-  const nextId = useRef(0);
-  const lastTime = useRef(0);
+export const HeartCursorTrail: React.FC = memo(() => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    const colors = ['#E88CA8', '#F7C5D0', '#D9B76E', '#FFF4EA', '#bd244b'];
+    // Disable on touch devices / mobile to save battery and touch latency
+    if (
+      typeof window === 'undefined' ||
+      window.innerWidth < 768 ||
+      window.matchMedia('(pointer: coarse)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return;
+    }
 
-    const spawnParticle = (clientX: number, clientY: number, count = 1) => {
-      const now = Date.now();
-      if (now - lastTime.current < 35) return; // throttle emission
-      lastTime.current = now;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-      const newParticles: Particle[] = [];
-      for (let i = 0; i < count; i++) {
-        const typeRoll = Math.random();
-        const type: 'heart' | 'sparkle' | 'rose' =
-          typeRoll < 0.65 ? 'heart' : typeRoll < 0.85 ? 'sparkle' : 'rose';
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const size = type === 'heart' ? 14 + Math.random() * 8 : 10 + Math.random() * 6;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-        newParticles.push({
-          id: nextId.current++,
-          x: clientX + (Math.random() - 0.5) * 16,
-          y: clientY + (Math.random() - 0.5) * 16,
-          type,
-          size,
-          rotation: (Math.random() - 0.5) * 45,
-          opacity: 0.9,
-          color,
-        });
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const handleResize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      if (canvas) {
+        canvas.width = width;
+        canvas.height = height;
       }
-
-      setParticles((prev) => [...prev.slice(-24), ...newParticles]);
     };
+    window.addEventListener('resize', handleResize);
+
+    const colors = ['#E88CA8', '#F7C5D0', '#D9B76E', '#FFF4EA'];
+    const particles: Particle[] = [];
+    let lastTime = 0;
+    let animId: number;
 
     const handleMouseMove = (e: MouseEvent) => {
-      spawnParticle(e.clientX, e.clientY);
-    };
+      const now = performance.now();
+      if (now - lastTime < 45) return; // throttle emission to ~22fps
+      lastTime = now;
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches[0]) {
-        spawnParticle(e.touches[0].clientX, e.touches[0].clientY);
+      if (particles.length < 10) {
+        particles.push({
+          x: e.clientX,
+          y: e.clientY,
+          size: 10 + Math.random() * 4,
+          opacity: 0.8,
+          color: colors[Math.floor(Math.random() * colors.length)],
+        });
       }
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+    // Single lightweight RAF loop with zero React state updates
+    const loop = () => {
+      if (particles.length > 0) {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.y -= 0.8;
+          p.opacity -= 0.035;
+          p.size *= 0.98;
+
+          if (p.opacity <= 0.05) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.globalAlpha = p.opacity;
+          ctx.fillStyle = p.color;
+
+          // Simple small heart path
+          const s = p.size;
+          ctx.beginPath();
+          ctx.moveTo(0, s * 0.3);
+          ctx.bezierCurveTo(-s * 0.5, -s * 0.2, -s * 0.5, -s * 0.7, 0, -s * 0.3);
+          ctx.bezierCurveTo(s * 0.5, -s * 0.7, s * 0.5, -s * 0.2, 0, s * 0.3);
+          ctx.fill();
+          ctx.restore();
+        }
+      } else {
+        ctx.clearRect(0, 0, width, height);
+      }
+
+      animId = requestAnimationFrame(loop);
+    };
+
+    loop();
 
     return () => {
+      window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
+      cancelAnimationFrame(animId);
     };
   }, []);
 
-  // Fade out and cleanup particles
-  useEffect(() => {
-    if (particles.length === 0) return;
-    const timer = setInterval(() => {
-      setParticles((prev) =>
-        prev
-          .map((p) => ({
-            ...p,
-            y: p.y - 1.2,
-            opacity: p.opacity - 0.05,
-            size: p.size * 0.97,
-          }))
-          .filter((p) => p.opacity > 0.1)
-      );
-    }, 40);
-
-    return () => clearInterval(timer);
-  }, [particles.length]);
-
   return (
-    <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden select-none" aria-hidden="true">
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className="absolute transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-75"
-          style={{
-            left: `${p.x}px`,
-            top: `${p.y}px`,
-            opacity: p.opacity,
-            transform: `translate(-50%, -50%) rotate(${p.rotation}deg)`,
-          }}
-        >
-          {p.type === 'heart' && (
-            <svg
-              width={p.size}
-              height={p.size}
-              viewBox="0 0 24 24"
-              fill={p.color}
-              stroke="none"
-              style={{ filter: `drop-shadow(0 0 6px ${p.color})` }}
-            >
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-            </svg>
-          )}
-
-          {p.type === 'sparkle' && (
-            <svg
-              width={p.size}
-              height={p.size}
-              viewBox="0 0 24 24"
-              fill={p.color}
-              stroke="none"
-              style={{ filter: `drop-shadow(0 0 5px ${p.color})` }}
-            >
-              <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
-            </svg>
-          )}
-
-          {p.type === 'rose' && (
-            <div
-              className="rounded-full bg-gradient-to-tr from-[#91173d] to-[#f7c5d0]"
-              style={{
-                width: `${p.size * 0.7}px`,
-                height: `${p.size * 0.7}px`,
-                boxShadow: `0 0 6px ${p.color}`,
-              }}
-            />
-          )}
-        </div>
-      ))}
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-50 select-none hidden md:block"
+      aria-hidden="true"
+    />
   );
-};
+});

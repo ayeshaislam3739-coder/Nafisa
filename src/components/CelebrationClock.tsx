@@ -8,7 +8,9 @@ export const CelebrationClock: React.FC = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTime(new Date());
+      if (!document.hidden) {
+        setTime(new Date());
+      }
     }, 1000);
 
     return () => clearInterval(timer);

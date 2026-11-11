@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Heart, ChevronLeft, ChevronRight, Sparkles, Play, Pause } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 export const EmotionalStory: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -12,7 +11,9 @@ export const EmotionalStory: React.FC = () => {
   useEffect(() => {
     if (!isPlaying) return;
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % messages.length);
+      if (!document.hidden) {
+        setCurrentIndex((prev) => (prev + 1) % messages.length);
+      }
     }, 6000);
 
     return () => clearInterval(interval);
@@ -20,12 +21,10 @@ export const EmotionalStory: React.FC = () => {
 
   const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1) % messages.length);
-    audioEngine.playSparkle();
   };
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev - 1 + messages.length) % messages.length);
-    audioEngine.playSparkle();
   };
 
   return (
@@ -95,7 +94,6 @@ export const EmotionalStory: React.FC = () => {
                     key={i}
                     onClick={() => {
                       setCurrentIndex(i);
-                      audioEngine.playSparkle();
                     }}
                     className={`h-1.5 rounded-full transition-all cursor-pointer ${
                       currentIndex === i ? 'w-6 bg-[#D9B76E]' : 'w-2 bg-white/20 hover:bg-white/40'
@@ -144,15 +142,10 @@ export const EmotionalStory: React.FC = () => {
           <div className="flex justify-center">
             <motion.div
               animate={{
-                scale: [1, 1.2, 1, 1.15, 1],
-                filter: [
-                  'drop-shadow(0 0 10px rgba(232,140,168,0.5))',
-                  'drop-shadow(0 0 25px rgba(232,140,168,0.9))',
-                  'drop-shadow(0 0 10px rgba(232,140,168,0.5))',
-                ],
+                scale: [1, 1.15, 1, 1.1, 1],
               }}
               transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-              className="text-[#E88CA8]"
+              className="text-[#E88CA8] drop-shadow-[0_0_15px_rgba(232,140,168,0.7)]"
             >
               <Heart className="w-10 h-10 fill-current" />
             </motion.div>

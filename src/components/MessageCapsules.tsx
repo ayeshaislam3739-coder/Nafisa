@@ -2,26 +2,19 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Heart, Stars, Smile, Gift, Lock, CheckCircle2 } from 'lucide-react';
 import { birthdayConfig, CapsuleData } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 export const MessageCapsules: React.FC = () => {
   const [openedCapsules, setOpenedCapsules] = useState<Record<string, boolean>>({});
   const capsules = birthdayConfig.capsules;
 
   const toggleCapsule = (id: string) => {
-    setOpenedCapsules((prev) => {
-      const isNowOpen = !prev[id];
-      if (isNowOpen) {
-        audioEngine.playSparkle();
-      } else {
-        audioEngine.playPop();
-      }
-      return { ...prev, [id]: isNowOpen };
-    });
+    setOpenedCapsules((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   const openAll = () => {
-    audioEngine.playChimeChord();
     const all: Record<string, boolean> = {};
     capsules.forEach((c) => (all[c.id] = true));
     setOpenedCapsules(all);

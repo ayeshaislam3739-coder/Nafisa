@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Sparkles, Heart, Flame } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 interface LoveFireworksProps {
   onPetalSurge: () => void;
@@ -17,13 +16,12 @@ export const LoveFireworks: React.FC<LoveFireworksProps> = ({ onPetalSurge }) =>
     setIsFiring(true);
     setWishRevealed(true);
     onPetalSurge();
-    audioEngine.playSparkle();
 
     // Heart-shaped fireworks burst
-    const end = Date.now() + 2.5 * 1000;
+    const end = Date.now() + 1.6 * 1000;
     const colors = ['#E88CA8', '#F7C5D0', '#D9B76E', '#FFF4EA', '#bd244b'];
 
-    const interval: NodeJS.Timeout = setInterval(() => {
+    const interval = setInterval(() => {
       if (Date.now() > end) {
         clearInterval(interval);
         setIsFiring(false);
@@ -31,22 +29,18 @@ export const LoveFireworks: React.FC<LoveFireworksProps> = ({ onPetalSurge }) =>
       }
 
       confetti({
-        particleCount: 12,
+        particleCount: 10,
         spread: 360,
-        startVelocity: 30,
+        startVelocity: 25,
         origin: {
           x: 0.2 + Math.random() * 0.6,
           y: 0.3 + Math.random() * 0.3,
         },
         colors,
         shapes: ['circle', 'star'],
-        scalar: 1.2,
+        scalar: 1.1,
       });
-    }, 200);
-
-    setTimeout(() => {
-      audioEngine.playChimeChord();
-    }, 800);
+    }, 220);
   };
 
   return (

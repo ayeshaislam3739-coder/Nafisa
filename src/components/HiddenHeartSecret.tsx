@@ -3,22 +3,20 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Heart, X, Sparkles } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 export const HiddenHeartSecret: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const secret = birthdayConfig.hiddenHeartSecret;
 
   const handleOpen = () => {
-    audioEngine.playChimeChord();
     setIsOpen(true);
 
     confetti({
-      particleCount: 80,
-      spread: 120,
+      particleCount: 40,
+      spread: 80,
       origin: { y: 0.5 },
       colors: ['#D9B76E', '#FFF4EA', '#F7C5D0', '#E88CA8', '#bd244b'],
-      scalar: 1.2,
+      scalar: 1.1,
     });
   };
 
@@ -69,15 +67,10 @@ export const HiddenHeartSecret: React.FC = () => {
               <div className="flex justify-center">
                 <motion.div
                   animate={{
-                    scale: [1, 1.2, 1, 1.15, 1],
-                    filter: [
-                      'drop-shadow(0 0 15px rgba(232,140,168,0.6))',
-                      'drop-shadow(0 0 35px rgba(217,183,110,0.9))',
-                      'drop-shadow(0 0 15px rgba(232,140,168,0.6))',
-                    ],
+                    scale: [1, 1.15, 1, 1.1, 1],
                   }}
-                  transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-                  className="w-24 h-24 rounded-full bg-gradient-to-br from-[#8c1839] via-[#610a22] to-[#30030e] border-2 border-[#D9B76E] shadow-2xl flex items-center justify-center"
+                  transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                  className="w-24 h-24 rounded-full bg-gradient-to-br from-[#8c1839] via-[#610a22] to-[#30030e] border-2 border-[#D9B76E] shadow-2xl flex items-center justify-center drop-shadow-[0_0_20px_rgba(232,140,168,0.7)]"
                 >
                   <Heart className="w-12 h-12 fill-[#E88CA8] text-[#E88CA8]" />
                 </motion.div>

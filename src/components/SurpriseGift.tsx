@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Gift, Heart, Sparkles, RotateCcw } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 export const SurpriseGift: React.FC = () => {
   const [isOpened, setIsOpened] = useState(false);
@@ -12,36 +11,23 @@ export const SurpriseGift: React.FC = () => {
   const handleUnwrap = () => {
     if (isOpened || isUnwrapping) return;
     setIsUnwrapping(true);
-    audioEngine.playSparkle();
 
     setTimeout(() => {
       setIsOpened(true);
       setIsUnwrapping(false);
-      audioEngine.playChimeChord();
 
       // Golden light explosion & heart particle burst
       confetti({
-        particleCount: 85,
-        spread: 110,
+        particleCount: 45,
+        spread: 90,
         origin: { y: 0.65 },
         colors: ['#D9B76E', '#FFF4EA', '#F7C5D0', '#E88CA8', '#bd244b'],
-        scalar: 1.25,
+        scalar: 1.15,
       });
-
-      setTimeout(() => {
-        confetti({
-          particleCount: 50,
-          spread: 140,
-          origin: { y: 0.6 },
-          colors: ['#E88CA8', '#F7C5D0'],
-          shapes: ['circle'],
-        });
-      }, 250);
-    }, 850);
+    }, 700);
   };
 
   const handleWrapAgain = () => {
-    audioEngine.playPop();
     setIsOpened(false);
   };
 

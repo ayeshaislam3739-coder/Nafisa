@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Heart, Sparkles, ChevronDown, Compass } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 interface BirthdayHeroProps {
   onDiscover: () => void;
@@ -10,10 +9,6 @@ interface BirthdayHeroProps {
 
 export const BirthdayHero: React.FC<BirthdayHeroProps> = ({ onDiscover }) => {
   const letters = birthdayConfig.birthdayName.split('');
-
-  const handleLetterHover = () => {
-    audioEngine.playSparkle();
-  };
 
   return (
     <section className="relative min-h-[96vh] flex flex-col items-center justify-center text-center px-4 pt-20 pb-20 overflow-hidden">
@@ -55,7 +50,6 @@ export const BirthdayHero: React.FC<BirthdayHeroProps> = ({ onDiscover }) => {
                   initial={{ opacity: 0, y: 40, rotateX: -60 }}
                   animate={{ opacity: 1, y: 0, rotateX: 0 }}
                   whileHover={{ scale: 1.15, y: -8, color: '#FFF4EA' }}
-                  onMouseEnter={handleLetterHover}
                   transition={{
                     duration: 0.8,
                     delay: 0.5 + index * 0.1,

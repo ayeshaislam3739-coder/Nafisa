@@ -2,35 +2,21 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Heart, Sparkles, RotateCcw } from 'lucide-react';
-import { audioEngine } from '../services/audioEngine';
 
 export const OrbitingHeart3D: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleHeartClick = () => {
     setIsExpanded(true);
-    audioEngine.playSparkle();
-    setTimeout(() => {
-      audioEngine.playChimeChord();
-    }, 300);
 
     // Heart explosion confetti
     confetti({
-      particleCount: 90,
-      spread: 120,
+      particleCount: 50,
+      spread: 90,
       origin: { y: 0.6 },
       colors: ['#E88CA8', '#F7C5D0', '#D9B76E', '#FFF4EA', '#bd244b'],
-      scalar: 1.3,
+      scalar: 1.15,
     });
-
-    setTimeout(() => {
-      confetti({
-        particleCount: 40,
-        spread: 160,
-        origin: { y: 0.65 },
-        colors: ['#D9B76E', '#F7C5D0'],
-      });
-    }, 250);
   };
 
   const handleReset = (e: React.MouseEvent) => {
@@ -39,11 +25,9 @@ export const OrbitingHeart3D: React.FC = () => {
   };
 
   const orbitingHearts = [
-    { id: 1, radius: 120, speed: 6, delay: 0, size: 20, color: '#E88CA8' },
-    { id: 2, radius: 150, speed: 8, delay: 1.5, size: 16, color: '#D9B76E' },
-    { id: 3, radius: 180, speed: 10, delay: 3, size: 22, color: '#F7C5D0' },
-    { id: 4, radius: 135, speed: 7, delay: 4.5, size: 18, color: '#FFF4EA' },
-    { id: 5, radius: 165, speed: 9, delay: 2, size: 15, color: '#bd244b' },
+    { id: 1, radius: 120, speed: 8, delay: 0, size: 20, color: '#E88CA8' },
+    { id: 2, radius: 155, speed: 10, delay: 1.5, size: 16, color: '#D9B76E' },
+    { id: 3, radius: 185, speed: 12, delay: 3, size: 22, color: '#F7C5D0' },
   ];
 
   return (
@@ -117,22 +101,14 @@ export const OrbitingHeart3D: React.FC = () => {
             onClick={handleHeartClick}
             animate={
               isExpanded
-                ? { scale: [1, 1.25, 1.15], rotate: [0, 2, -2, 0] }
-                : {
-                    scale: [1, 1.12, 1, 1.08, 1],
-                    filter: [
-                      'drop-shadow(0 0 20px rgba(232,140,168,0.5))',
-                      'drop-shadow(0 0 45px rgba(217,183,110,0.8))',
-                      'drop-shadow(0 0 20px rgba(232,140,168,0.5))',
-                    ],
-                  }
+                ? { scale: [1, 1.2, 1.12], rotate: [0, 2, -2, 0] }
+                : { scale: [1, 1.08, 1, 1.05, 1] }
             }
             transition={{
-              scale: { duration: isExpanded ? 0.8 : 2.5, repeat: isExpanded ? 0 : Infinity, ease: 'easeInOut' },
-              filter: { duration: 2.5, repeat: Infinity, ease: 'easeInOut' },
+              scale: { duration: isExpanded ? 0.7 : 2.5, repeat: isExpanded ? 0 : Infinity, ease: 'easeInOut' },
             }}
-            whileHover={{ scale: 1.15, cursor: 'pointer' }}
-            className="relative z-20 group"
+            whileHover={{ scale: 1.1, cursor: 'pointer' }}
+            className="relative z-20 group drop-shadow-[0_0_25px_rgba(232,140,168,0.6)]"
             title="Click the heart!"
           >
             {/* Ambient Aura */}

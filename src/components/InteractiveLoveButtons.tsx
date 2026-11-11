@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Heart, Sparkles, X, Stars, Gift, ShieldCheck, LockOpen } from 'lucide-react';
 import { birthdayConfig, LoveButtonData } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 export const InteractiveLoveButtons: React.FC = () => {
   const [activeButton, setActiveButton] = useState<LoveButtonData | null>(null);
@@ -12,18 +11,16 @@ export const InteractiveLoveButtons: React.FC = () => {
 
   const handleButtonClick = (btn: LoveButtonData) => {
     if (btn.isFullScreen) {
-      audioEngine.playChimeChord();
       setFullScreenActive(btn);
       setActiveButton(null);
 
       confetti({
-        particleCount: 70,
-        spread: 100,
+        particleCount: 45,
+        spread: 90,
         origin: { y: 0.6 },
         colors: ['#D9B76E', '#FFF4EA', '#F7C5D0', '#E88CA8'],
       });
     } else {
-      audioEngine.playSparkle();
       setActiveButton(activeButton?.id === btn.id ? null : btn);
       setFullScreenActive(null);
     }

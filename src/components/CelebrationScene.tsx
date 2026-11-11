@@ -3,7 +3,6 @@ import { motion } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Sparkles, Heart, PartyPopper } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 interface BalloonItem {
   id: number;
@@ -23,40 +22,40 @@ export const CelebrationScene: React.FC = () => {
     { id: 5, x: 88, color: 'from-[#F7C5D0] to-[#c7657f]', delay: 1.5, speed: 19, popped: false },
   ]);
 
-  // Periodic celebratory soft fireworks
+  // Periodic celebratory soft fireworks (paused when hidden)
   useEffect(() => {
     const interval = setInterval(() => {
+      if (document.hidden) return;
       const x = 0.2 + Math.random() * 0.6;
       const y = 0.15 + Math.random() * 0.25;
       confetti({
-        particleCount: 28,
+        particleCount: 20,
         startVelocity: 25,
         spread: 360,
-        ticks: 85,
+        ticks: 70,
         origin: { x, y },
         colors: ['#D9B76E', '#F7C5D0', '#E88CA8', '#FFF4EA'],
         scalar: 0.85,
         disableForReducedMotion: true,
       });
-    }, 7000);
+    }, 8000);
 
     return () => clearInterval(interval);
   }, []);
 
   const popBalloon = (id: number, e: React.MouseEvent) => {
     e.stopPropagation();
-    audioEngine.playPop();
 
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
     const x = (rect.left + rect.width / 2) / window.innerWidth;
     const y = (rect.top + rect.height / 2) / window.innerHeight;
 
     confetti({
-      particleCount: 40,
-      spread: 75,
+      particleCount: 35,
+      spread: 70,
       origin: { x, y },
       colors: ['#D9B76E', '#FFF4EA', '#E88CA8', '#F7C5D0', '#bd244b'],
-      scalar: 1.05,
+      scalar: 1.0,
     });
 
     setBalloons((prev) =>
@@ -72,13 +71,12 @@ export const CelebrationScene: React.FC = () => {
   };
 
   const triggerSparkleBurst = (e?: React.MouseEvent) => {
-    audioEngine.playSparkle();
     const x = e ? e.clientX / window.innerWidth : 0.5;
     const y = e ? e.clientY / window.innerHeight : 0.65;
 
     confetti({
-      particleCount: 65,
-      spread: 95,
+      particleCount: 45,
+      spread: 85,
       origin: { x, y },
       colors: ['#D9B76E', '#FFF4EA', '#F7C5D0', '#E88CA8'],
       shapes: ['star', 'circle'],

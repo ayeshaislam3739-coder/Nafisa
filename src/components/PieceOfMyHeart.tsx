@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Heart, Sparkles, RotateCcw, X, Feather } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 interface PieceOfMyHeartProps {
   onPetalSurge?: () => void;
@@ -19,51 +18,42 @@ export const PieceOfMyHeart: React.FC<PieceOfMyHeartProps> = ({ onPetalSurge }) 
     setIsRevealed(true);
     setShowSecondMessage(false);
     onPetalSurge?.();
-    audioEngine.playSparkle();
 
-    // Release dozens of tiny floating hearts and golden sparkles
+    // Release delicate floating hearts and golden sparkles
     confetti({
-      particleCount: 85,
-      spread: 110,
+      particleCount: 50,
+      spread: 90,
       origin: { y: 0.6 },
       colors: ['#E88CA8', '#F7C5D0', '#D9B76E', '#FFF4EA', '#bd244b'],
-      scalar: 1.25,
+      scalar: 1.15,
     });
-
-    setTimeout(() => {
-      audioEngine.playChimeChord();
-    }, 400);
 
     // After a few seconds, reveal the second message
     setTimeout(() => {
       setShowSecondMessage(true);
       confetti({
-        particleCount: 45,
-        spread: 90,
+        particleCount: 30,
+        spread: 70,
         origin: { y: 0.65 },
         colors: ['#D9B76E', '#F7C5D0'],
       });
-    }, 2800);
+    }, 2400);
   };
 
   const handleReplay = (e: React.MouseEvent) => {
     e.stopPropagation();
-    audioEngine.playPop();
     setIsRevealed(false);
     setShowSecondMessage(false);
   };
 
   const handleOpenSecret = () => {
-    audioEngine.playChimeChord();
     setSecretModalOpen(true);
   };
 
   const surroundingHearts = [
-    { id: 1, radius: 125, speed: 7, delay: 0, size: 22, color: '#E88CA8' },
-    { id: 2, radius: 160, speed: 9, delay: 1.5, size: 17, color: '#D9B76E' },
-    { id: 3, radius: 195, speed: 11, delay: 3, size: 24, color: '#F7C5D0' },
-    { id: 4, radius: 140, speed: 8, delay: 4, size: 19, color: '#FFF4EA' },
-    { id: 5, radius: 175, speed: 10, delay: 2, size: 16, color: '#bd244b' },
+    { id: 1, radius: 125, speed: 8, delay: 0, size: 22, color: '#E88CA8' },
+    { id: 2, radius: 160, speed: 10, delay: 1.5, size: 17, color: '#D9B76E' },
+    { id: 3, radius: 195, speed: 12, delay: 3, size: 24, color: '#F7C5D0' },
   ];
 
   return (
@@ -140,19 +130,10 @@ export const PieceOfMyHeart: React.FC<PieceOfMyHeartProps> = ({ onPetalSurge }) 
             onClick={handleHeartClick}
             animate={
               isRevealed
-                ? { scale: [1, 1.25, 1.15], rotate: [0, 2, -2, 0] }
+                ? { scale: [1, 1.2, 1.12], rotate: [0, 2, -2, 0] }
                 : {
                     // Lub-Dub Natural Heartbeat:
-                    // 0%: 1.0 -> 14%: 1.12 -> 28%: 1.0 -> 42%: 1.20 -> 56%: 1.0 -> 100%: 1.0 (relaxing pause)
-                    scale: [1.0, 1.12, 1.0, 1.20, 1.0, 1.0],
-                    filter: [
-                      'drop-shadow(0 0 20px rgba(232,140,168,0.5))',
-                      'drop-shadow(0 0 35px rgba(217,183,110,0.8))',
-                      'drop-shadow(0 0 20px rgba(232,140,168,0.5))',
-                      'drop-shadow(0 0 45px rgba(232,140,168,0.9))',
-                      'drop-shadow(0 0 20px rgba(232,140,168,0.5))',
-                      'drop-shadow(0 0 20px rgba(232,140,168,0.5))',
-                    ],
+                    scale: [1.0, 1.1, 1.0, 1.16, 1.0, 1.0],
                   }
             }
             transition={{
@@ -161,8 +142,8 @@ export const PieceOfMyHeart: React.FC<PieceOfMyHeartProps> = ({ onPetalSurge }) 
               ease: 'easeInOut',
               times: isRevealed ? undefined : [0, 0.14, 0.28, 0.42, 0.56, 1.0],
             }}
-            whileHover={{ scale: 1.15, cursor: 'pointer' }}
-            className="relative z-20 group"
+            whileHover={{ scale: 1.1, cursor: 'pointer' }}
+            className="relative z-20 group drop-shadow-[0_0_25px_rgba(232,140,168,0.6)]"
             title="Click to feel my heart"
           >
             {/* Ambient Inner Halo */}

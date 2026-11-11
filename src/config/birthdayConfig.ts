@@ -102,11 +102,6 @@ export interface BirthdayConfig {
     lavender: string;
     ivory: string;
   };
-  music: {
-    title: string;
-    artist: string;
-    audioUrl?: string;
-  };
 }
 
 export const birthdayConfig: BirthdayConfig = {
@@ -310,10 +305,5 @@ export const birthdayConfig: BirthdayConfig = {
     gold: "#D9B76E",
     lavender: "#B9A5E8",
     ivory: "#FFF4EA"
-  },
-  music: {
-    title: "Dreamy Piano & Ambient Serenade for Nafisa",
-    artist: "Mind-Relaxing Romantic Instrumental",
-    audioUrl: ""
   }
 };

@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Sparkles, Wind, RotateCcw, Heart, Stars } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 export const BirthdayCake: React.FC = () => {
   const [candlesLit, setCandlesLit] = useState(true);
@@ -22,9 +21,6 @@ export const BirthdayCake: React.FC = () => {
     if (!candlesLit || isBlowing) return;
     setIsBlowing(true);
 
-    // Play native synthesized breath sound
-    audioEngine.playBlow();
-
     // Wind waver sequence followed by extinguishing
     setTimeout(() => {
       setCandlesLit(false);
@@ -33,36 +29,16 @@ export const BirthdayCake: React.FC = () => {
 
       // Gold, rose, and ivory confetti burst
       confetti({
-        particleCount: 110,
-        spread: 110,
+        particleCount: 65,
+        spread: 90,
         origin: { y: 0.6 },
-        colors: ['#D9B76E', '#FFF4EA', '#F7C5D0', '#E88CA8', '#bd244b', '#ffffff'],
-        scalar: 1.15,
-        shapes: ['circle', 'star'],
+        colors: ['#D9B76E', '#FFF4EA', '#F7C5D0', '#E88CA8', '#bd244b'],
+        scalar: 1.1,
       });
-
-      // Lateral fireworks fountains
-      setTimeout(() => {
-        confetti({
-          particleCount: 50,
-          angle: 60,
-          spread: 60,
-          origin: { x: 0.15, y: 0.62 },
-          colors: ['#D9B76E', '#F7C5D0'],
-        });
-        confetti({
-          particleCount: 50,
-          angle: 120,
-          spread: 60,
-          origin: { x: 0.85, y: 0.62 },
-          colors: ['#D9B76E', '#F7C5D0'],
-        });
-      }, 350);
-    }, 1100);
+    }, 900);
   };
 
   const handleRelight = () => {
-    audioEngine.playSparkle();
     setCandlesLit(true);
     setWishMade(false);
     setSelectedWish(null);

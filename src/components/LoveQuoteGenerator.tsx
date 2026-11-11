@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Sparkles, Heart, RefreshCw, Copy, Check } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 export const LoveQuoteGenerator: React.FC = () => {
   const quotes = birthdayConfig.romanticQuotes;
@@ -21,12 +20,10 @@ export const LoveQuoteGenerator: React.FC = () => {
   const currentQuote = quotes[currentQuoteIndex];
 
   const handleNextQuote = () => {
-    audioEngine.playSparkle();
-
     // Occasional tiny sparkle burst
     confetti({
-      particleCount: 25,
-      spread: 60,
+      particleCount: 20,
+      spread: 50,
       origin: { y: 0.65 },
       colors: ['#D9B76E', '#FFF4EA', '#E88CA8'],
       scalar: 0.8,
@@ -45,7 +42,6 @@ export const LoveQuoteGenerator: React.FC = () => {
   };
 
   const handleCopyQuote = () => {
-    audioEngine.playPop();
     navigator.clipboard?.writeText?.(currentQuote);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

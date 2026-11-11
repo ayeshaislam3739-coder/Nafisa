@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Heart, Sparkles, PartyPopper, ArrowUp } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 interface FinalCelebrationProps {
   onPetalSurge: () => void;
@@ -16,14 +15,9 @@ export const FinalCelebration: React.FC<FinalCelebrationProps> = ({ onPetalSurge
   const handleCelebrateAgain = () => {
     setCelebrationActive(true);
     onPetalSurge();
-    audioEngine.playSparkle();
-
-    setTimeout(() => {
-      audioEngine.playChimeChord();
-    }, 500);
 
     // Cinematic fireworks volley across the screen
-    const duration = 4.5 * 1000;
+    const duration = 2.2 * 1000;
     const animationEnd = Date.now() + duration;
 
     const frame = () => {
@@ -77,21 +71,21 @@ export const FinalCelebration: React.FC<FinalCelebrationProps> = ({ onPetalSurge
 
       {/* Floating Sparkles & Hearts */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(10)].map((_, i) => (
+        {[...Array(3)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ y: '100%', opacity: 0 }}
             animate={{ y: '-10%', opacity: [0, 0.7, 0] }}
             transition={{
-              duration: 8 + (i % 4) * 2,
+              duration: 10 + i * 2,
               repeat: Infinity,
-              delay: i * 1.1,
+              delay: i * 2.5,
               ease: 'linear',
             }}
-            className="absolute text-[#D9B76E]/40"
-            style={{ left: `${(i * 12 + 6) % 94}%` }}
+            className="absolute text-[#D9B76E]/30"
+            style={{ left: `${(i * 30 + 15) % 85}%` }}
           >
-            <Sparkles className="w-5 h-5" />
+            <Sparkles className="w-4 h-4" />
           </motion.div>
         ))}
       </div>

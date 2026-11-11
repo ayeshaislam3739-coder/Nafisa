@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Heart, Sparkles, X, MailOpen, Feather, RotateCcw } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 export const LoveLetter: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,12 +13,11 @@ export const LoveLetter: React.FC = () => {
   const handleOpenLetter = () => {
     if (isOpen || isOpening) return;
     setIsOpening(true);
-    audioEngine.playChimeChord();
 
     // Wax seal shimmer burst
     confetti({
-      particleCount: 35,
-      spread: 70,
+      particleCount: 25,
+      spread: 60,
       origin: { y: 0.55 },
       colors: ['#D9B76E', '#FFF4EA', '#bd244b', '#E88CA8'],
       scalar: 0.9,
@@ -29,16 +27,14 @@ export const LoveLetter: React.FC = () => {
       setIsOpen(true);
       setIsOpening(false);
       setRevealKey((k) => k + 1);
-    }, 700);
+    }, 600);
   };
 
   const handleReadAgain = () => {
-    audioEngine.playSparkle();
     setRevealKey((k) => k + 1);
   };
 
   const handleCloseLetter = () => {
-    audioEngine.playPop();
     setIsOpen(false);
   };
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Sparkles, Menu, X } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
-import { audioEngine } from '../services/audioEngine';
 
 interface NavigationProps {
   onCelebrateClick: () => void;
@@ -34,7 +33,6 @@ export const Navigation: React.FC<NavigationProps> = ({ onCelebrateClick }) => {
 
   const handleLinkClick = (href: string) => {
     setMobileMenuOpen(false);
-    audioEngine.playSparkle();
     const el = document.querySelector(href);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
