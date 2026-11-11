@@ -6,7 +6,7 @@ import { RosePetalSystem } from './components/RosePetalSystem';
 import { HeartCursorTrail } from './components/HeartCursorTrail';
 import { Navigation } from './components/Navigation';
 import { BirthdayHero } from './components/BirthdayHero';
-import { ScrollBloomingRose } from './components/ScrollBloomingRose';
+import { WebsiteBackgroundRose } from './components/WebsiteBackgroundRose';
 import { DiscoveryGuide } from './components/DiscoveryGuide';
 
 // Code splitting: Lazy load below-the-fold components for instant initial loading
@@ -68,8 +68,8 @@ export default function App() {
       {/* Multi-Layered Atmosphere Background with Pure CSS Gradients */}
       <AtmosphereBackground />
 
-      {/* Scroll-Reactive Realistic Single Red Rose Background Element */}
-      <ScrollBloomingRose />
+      {/* Center Background Rose: Exact uploaded background-removed red rose */}
+      <WebsiteBackgroundRose />
 
       {/* Lightweight Glowing Heart Cursor Trail for desktop */}
       <HeartCursorTrail />
