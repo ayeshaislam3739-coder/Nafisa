@@ -61,20 +61,18 @@ export const LoveQuoteGenerator: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="space-y-3"
         >
-          <div className="inline-flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#D9B76E]" />
-            <span className="font-script text-3xl sm:text-4xl text-[#F7C5D0]">
-              Poetry of the moment
-            </span>
-            <Sparkles className="w-4 h-4 text-[#D9B76E]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E88CA8]/15 border border-[#E88CA8]/35 text-[#F7C5D0] text-xs uppercase tracking-[0.25em] font-semibold">
+            <Heart className="w-3.5 h-3.5 fill-[#E88CA8] text-[#E88CA8]" />
+            <span>A LITTLE LOVE NOTE FOR YOU</span>
+            <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
           </div>
 
           <h2 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-wider text-[#FFF4EA]">
             A Little Love, A Little Magic
           </h2>
 
-          <p className="font-cormorant italic text-lg sm:text-xl text-[#FFF4EA]/85 max-w-md mx-auto font-light">
-            Each click summons a fresh thought, curated especially for Nafisa.
+          <p className="font-cormorant italic text-lg sm:text-xl text-[#FFF4EA]/85 max-w-lg mx-auto font-light">
+            Click to discover a little romantic thought.
           </p>
         </motion.div>
 

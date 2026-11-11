@@ -64,20 +64,20 @@ export const BirthdayCake: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="space-y-3"
         >
-          <div className="inline-flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#D9B76E]" />
-            <span className="font-script text-3xl sm:text-4xl text-[#F7C5D0]">
-              The Birthday Tradition
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D9B76E]/40 bg-[#2b1022]/70 backdrop-blur-md shadow-md">
+            <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
+            <span className="font-playfair text-xs sm:text-sm font-semibold tracking-wider text-[#D9B76E] uppercase">
+              MAKE A WISH, NAFISA 🎂
             </span>
-            <Sparkles className="w-4 h-4 text-[#D9B76E]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
           </div>
 
           <h2 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-wider text-[#FFF4EA]">
             Make a Wish, Nafisa
           </h2>
 
-          <p className="font-cormorant italic text-lg sm:text-xl text-[#FFF4EA]/85 max-w-md mx-auto font-light">
-            {birthdayConfig.cakeSubtitle}
+          <p className="font-cormorant italic text-lg sm:text-xl text-[#F7C5D0] max-w-md mx-auto font-light">
+            Tap the button below to blow out the candles and make your birthday wish.
           </p>
         </motion.div>
 
@@ -283,7 +283,7 @@ export const BirthdayCake: React.FC = () => {
                   ) : (
                     <>
                       <Sparkles className="w-4 h-4 text-[#6e112c]" />
-                      <span>Make a Wish, Nafisa</span>
+                      <span>MAKE A WISH, NAFISA 🎂</span>
                       <Wind className="w-4 h-4 text-[#6e112c] group-hover:translate-x-1 transition-transform" />
                     </>
                   )}

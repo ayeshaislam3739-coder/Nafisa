@@ -70,12 +70,10 @@ export const PieceOfMyHeart: React.FC<PieceOfMyHeartProps> = ({ onPetalSurge }) 
           transition={{ duration: 0.8 }}
           className="space-y-3"
         >
-          <div className="inline-flex items-center gap-2">
-            <Heart className="w-4 h-4 fill-[#E88CA8] text-[#E88CA8]" />
-            <span className="font-script text-3xl sm:text-4xl text-[#F7C5D0]">
-              From the quiet depths of the heart
-            </span>
-            <Heart className="w-4 h-4 fill-[#E88CA8] text-[#E88CA8]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E88CA8]/15 border border-[#E88CA8]/35 text-[#F7C5D0] text-xs uppercase tracking-[0.25em] font-semibold">
+            <Heart className="w-3.5 h-3.5 fill-[#E88CA8] text-[#E88CA8]" />
+            <span>A LITTLE PIECE OF MY HEART ❤️</span>
+            <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
           </div>
 
           <h2 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-wider text-[#FFF4EA]">
@@ -83,7 +81,7 @@ export const PieceOfMyHeart: React.FC<PieceOfMyHeartProps> = ({ onPetalSurge }) 
           </h2>
 
           <p className="font-cormorant italic text-lg sm:text-xl text-[#FFF4EA]/85 max-w-md mx-auto font-light">
-            {pieceOfMyHeart.subheading}
+            There&apos;s something hidden inside this heart. Tap it and see.
           </p>
         </motion.div>
 
@@ -240,9 +238,19 @@ export const PieceOfMyHeart: React.FC<PieceOfMyHeartProps> = ({ onPetalSurge }) 
           </AnimatePresence>
 
           {!isRevealed && (
-            <p className="text-xs text-[#FFF4EA]/50 italic">
-              Tap the glowing heart to hear what it whispers for you.
-            </p>
+            <div className="flex flex-col items-center gap-2">
+              <button
+                onClick={handleHeartClick}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#D9B76E]/20 via-[#E88CA8]/20 to-[#D9B76E]/20 border border-[#D9B76E]/60 hover:border-[#D9B76E] text-xs tracking-[0.2em] uppercase font-bold text-[#FFF4EA] hover:bg-[#D9B76E]/30 transition-all cursor-pointer shadow-lg group"
+              >
+                <Heart className="w-4 h-4 fill-[#E88CA8] text-[#E88CA8] group-hover:scale-125 transition-transform" />
+                <span>Tap to Unlock My Heart</span>
+                <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
+              </button>
+              <p className="text-xs text-[#FFF4EA]/60 italic">
+                Tap the glowing heart or button above to hear what it whispers for you.
+              </p>
+            </div>
           )}
         </div>
 

@@ -41,20 +41,20 @@ export const EmotionalStory: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="space-y-3"
         >
-          <div className="inline-flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#D9B76E]" />
-            <span className="font-script text-3xl sm:text-4xl text-[#F7C5D0]">
-              Whispers of the soul
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D9B76E]/40 bg-[#2b1022]/70 backdrop-blur-md shadow-md">
+            <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
+            <span className="font-playfair text-xs sm:text-sm font-semibold tracking-wider text-[#D9B76E] uppercase">
+              DISCOVER MY LITTLE MESSAGE
             </span>
-            <Sparkles className="w-4 h-4 text-[#D9B76E]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
           </div>
 
           <h2 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-wider text-[#FFF4EA]">
             If I Could Tell You One Thing...
           </h2>
 
-          <p className="font-cormorant italic text-lg sm:text-xl text-[#FFF4EA]/80 max-w-md mx-auto font-light">
-            Thoughts held gently in the heart, dedicated to Nafisa.
+          <p className="font-cormorant italic text-lg sm:text-xl text-[#F7C5D0] max-w-md mx-auto font-light">
+            Take a moment and read what I wanted to tell you. (Use arrows or dots to browse thoughts)
           </p>
         </motion.div>
 

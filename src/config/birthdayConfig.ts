@@ -262,17 +262,23 @@ export const birthdayConfig: BirthdayConfig = {
     "You are the poetry that life forgot to write down, but my heart never fails to remember."
   ],
 
-  // Love Letter 2.0
+  // Love Letter 2.0 (Complete Heartfelt Letter)
   loveLetter: {
-    salutation: "My Dearest Nafisa,",
+    salutation: "My Dear Nafisa,",
     paragraphs: [
-      "I know words can only express a tiny fraction of what someone truly feels, but I still wanted to write this for you today.",
-      "Meeting you and having you in my life has brought so much warmth, clarity, and gentleness into my days.",
-      "Your laugh, your smile, and the genuine kindness you carry wherever you go are things I admire deeply.",
-      "On your birthday, all I wish is for you to be surrounded by genuine happiness, peace in your heart, and people who cherish you as much as you deserve.",
-      "Thank you for being who you are, Nafisa. Never lose that beautiful spark that makes you so uniquely wonderful."
+      "I have been thinking about what to write to you today, and honestly, I don't think there are enough words to express everything I feel. Still, I wanted to put some of my feelings into words because your birthday is not just another day to me. It is a beautiful reminder of how lucky I am to have someone as special as you in my life.",
+      "Nafisa, I don't know if I tell you this often enough, but you truly mean so much to me. There is something about you that makes you different from everyone else. Your smile, your laughter, your little ways of expressing yourself, and even the simplest things about you have a special place in my heart.",
+      "Sometimes, I find myself smiling just by thinking about you. And those little moments make me realize how deeply someone can matter without even trying. You may not always understand how special you are to me, but I hope you never doubt that you hold a very beautiful place in my heart.",
+      "I wish I could make every day of your life as beautiful as you deserve. I wish I could take away every worry that makes you sad, turn your difficult days into easier ones, and give you countless reasons to smile. Even though I cannot make everything perfect, I genuinely hope that life always treats you kindly.",
+      "On your birthday, I want to wish you more than just happiness. I wish you a heart that always feels peaceful, a life filled with beautiful opportunities, the courage to follow your dreams, and the strength to overcome every challenge that comes your way.",
+      "I hope you achieve everything you have ever wished for. I hope you wake up every morning with a reason to smile and go to sleep every night with a heart full of peace. And whenever life feels difficult, I hope you remember how precious, capable, and wonderful you truly are.",
+      "There are so many things I would love to tell you, but sometimes feelings are much bigger than the words we choose. I may not always express myself perfectly, and I may not always find the right way to say what is in my heart. But one thing I know for sure is that you are genuinely important to me.",
+      "If I could make one birthday wish for you, it would be that you never lose the beautiful smile that makes you so special. Keep being yourself, keep dreaming big, and never let anything take away the light inside you.",
+      "Thank you for being you, Nafisa. Thank you for bringing your own kind of beauty into my world. I hope this little surprise makes you smile, because making you feel special today was something I truly wanted to do.",
+      "Happy Birthday, My Dearest Nafisa.",
+      "No matter how many words I write, they will never be enough to explain how special you are to me. But I hope you can feel the love and sincerity behind every single line."
     ],
-    closing: "With all my heartfelt thoughts,",
+    closing: "Your Love ,",
     signOff: "Abdul Ahad"
   },
 

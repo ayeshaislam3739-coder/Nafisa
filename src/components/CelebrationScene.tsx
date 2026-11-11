@@ -166,17 +166,17 @@ export const CelebrationScene: React.FC = () => {
             &ldquo;I truly wish that your day is filled with laughter, peaceful moments, and all the quiet happiness you deserve so deeply.&rdquo;
           </p>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="pt-2 flex flex-col items-center justify-center gap-3">
             <button
               onClick={triggerSparkleBurst}
-              className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full text-xs font-semibold tracking-wider uppercase text-[#1a0815] bg-gradient-to-r from-[#D9B76E] via-[#FFF0D0] to-[#E88CA8] hover:scale-105 transition-all shadow-md cursor-pointer"
+              className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1a0815] bg-gradient-to-r from-[#D9B76E] via-[#FFF0D0] to-[#E88CA8] hover:scale-105 transition-all shadow-[0_0_30px_rgba(217,183,110,0.35)] cursor-pointer"
             >
-              <PartyPopper className="w-4 h-4" />
-              <span>Launch Sparkles</span>
+              <PartyPopper className="w-4 h-4 text-[#1a0815]" />
+              <span>START THE CELEBRATION ✨</span>
             </button>
-            <span className="text-xs text-[#FFF4EA]/65 italic">
-              Tip: Click any floating balloon above to pop it!
-            </span>
+            <p className="text-xs text-[#F7C5D0] italic">
+              Click here and let your birthday celebration begin! (Tip: Tap any floating balloon to pop it)
+            </p>
           </div>
         </motion.div>
       </div>

@@ -55,20 +55,18 @@ export const InteractiveLoveButtons: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="space-y-3"
         >
-          <div className="inline-flex items-center gap-2">
-            <Heart className="w-4 h-4 fill-[#E88CA8] text-[#E88CA8]" />
-            <span className="font-script text-3xl sm:text-4xl text-[#F7C5D0]">
-              Interactive Love Keys
-            </span>
-            <Heart className="w-4 h-4 fill-[#E88CA8] text-[#E88CA8]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E88CA8]/15 border border-[#E88CA8]/35 text-[#F7C5D0] text-xs uppercase tracking-[0.25em] font-semibold">
+            <Heart className="w-3.5 h-3.5 fill-[#E88CA8] text-[#E88CA8]" />
+            <span>UNLOCK LITTLE PIECES OF MY HEART</span>
+            <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
           </div>
 
           <h2 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-wider text-[#FFF4EA]">
             Discover My Heart
           </h2>
 
-          <p className="text-sm sm:text-base text-[#FFF4EA]/75 max-w-md mx-auto font-light leading-relaxed">
-            Click each key to unlock a hidden secret, promise, and personal feeling.
+          <p className="text-sm sm:text-base text-[#FFF4EA]/85 max-w-lg mx-auto font-light leading-relaxed">
+            Tap each glowing key one by one to discover the little messages waiting for you.
           </p>
         </motion.div>
 

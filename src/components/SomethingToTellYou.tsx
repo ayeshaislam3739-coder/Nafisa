@@ -20,20 +20,18 @@ export const SomethingToTellYou: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="space-y-3"
         >
-          <div className="inline-flex items-center gap-2">
-            <Feather className="w-4 h-4 text-[#D9B76E]" />
-            <span className="font-script text-3xl sm:text-4xl text-[#F7C5D0]">
-              From me to you
-            </span>
-            <Feather className="w-4 h-4 text-[#D9B76E]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E88CA8]/15 border border-[#E88CA8]/35 text-[#F7C5D0] text-xs uppercase tracking-[0.25em] font-semibold">
+            <Heart className="w-3.5 h-3.5 fill-[#E88CA8] text-[#E88CA8]" />
+            <span>A MESSAGE FROM MY HEART</span>
+            <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
           </div>
 
           <h2 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-wider text-[#FFF4EA]">
             {somethingToTellYou.heading}
           </h2>
 
-          <p className="font-cormorant italic text-lg sm:text-xl text-[#FFF4EA]/80 max-w-md mx-auto font-light">
-            A genuine thought straight from Abdul Ahad.
+          <p className="font-cormorant italic text-lg sm:text-xl text-[#FFF4EA]/85 max-w-lg mx-auto font-light">
+            Click below to reveal something I wanted you to know.
           </p>
         </motion.div>
 

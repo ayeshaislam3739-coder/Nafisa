@@ -49,26 +49,27 @@ export const MessageCapsules: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="space-y-3"
         >
-          <div className="inline-flex items-center gap-2">
-            <Gift className="w-4 h-4 text-[#D9B76E]" />
-            <span className="font-script text-3xl sm:text-4xl text-[#F7C5D0]">
-              Tokens of affection
-            </span>
-            <Gift className="w-4 h-4 text-[#D9B76E]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E88CA8]/15 border border-[#E88CA8]/35 text-[#F7C5D0] text-xs uppercase tracking-[0.25em] font-semibold">
+            <Gift className="w-3.5 h-3.5 text-[#D9B76E]" />
+            <span>OPEN THESE LITTLE SURPRISES</span>
+            <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
           </div>
 
           <h2 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-wider text-[#FFF4EA]">
             Open These Little Pieces of Love
           </h2>
 
-          <p className="font-cormorant italic text-lg sm:text-xl text-[#FFF4EA]/85 max-w-md mx-auto font-light">
-            Five sealed capsules waiting for Nafisa to unfold their secrets.
+          <p className="font-cormorant italic text-lg sm:text-xl text-[#FFF4EA]/85 max-w-lg mx-auto font-light">
+            Tap each little capsule to discover a special message.
           </p>
 
-          <div className="pt-2">
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+            <span className="px-3.5 py-1 rounded-full bg-[#2b1022] border border-[#D9B76E]/30 text-xs font-medium text-[#F7C5D0]">
+              Opened {Object.values(openedCapsules).filter(Boolean).length} of {capsules.length}
+            </span>
             <button
               onClick={openAll}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase text-[#D9B76E] border border-[#D9B76E]/40 hover:bg-[#D9B76E]/15 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase text-[#D9B76E] border border-[#D9B76E]/40 hover:bg-[#D9B76E]/15 transition-colors cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>Unseal All Capsules</span>

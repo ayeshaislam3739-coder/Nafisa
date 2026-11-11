@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState, useRef } from 'react';
+import { motion } from 'motion/react';
 import confetti from 'canvas-confetti';
-import { Heart, Sparkles, X, MailOpen, Feather, RotateCcw } from 'lucide-react';
+import { Heart, X, MailOpen, Feather, RotateCcw, ChevronDown } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
 
 export const LoveLetter: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpening, setIsOpening] = useState(false);
   const [revealKey, setRevealKey] = useState(0);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const { loveLetter } = birthdayConfig;
 
   const handleOpenLetter = () => {
@@ -16,7 +18,7 @@ export const LoveLetter: React.FC = () => {
 
     // Wax seal shimmer burst
     confetti({
-      particleCount: 25,
+      particleCount: 30,
       spread: 60,
       origin: { y: 0.55 },
       colors: ['#D9B76E', '#FFF4EA', '#bd244b', '#E88CA8'],
@@ -27,24 +29,35 @@ export const LoveLetter: React.FC = () => {
       setIsOpen(true);
       setIsOpening(false);
       setRevealKey((k) => k + 1);
+      setHasScrolled(false);
     }, 600);
   };
 
   const handleReadAgain = () => {
     setRevealKey((k) => k + 1);
+    setHasScrolled(false);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handleCloseLetter = () => {
     setIsOpen(false);
   };
 
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    if (e.currentTarget.scrollTop > 60) {
+      setHasScrolled(true);
+    }
+  };
+
   return (
     <section id="letter" className="relative py-28 px-4 overflow-hidden">
       {/* Background Romantic Ambient Aura */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[550px] rounded-full bg-gradient-to-tr from-[#400D24]/30 via-[#D9B76E]/10 to-transparent blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[550px] rounded-full bg-gradient-to-tr from-[#400D24]/30 via-[#D9B76E]/10 to-transparent blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-4xl mx-auto text-center space-y-12 z-10">
-        {/* Section Header */}
+      <div className="relative max-w-4xl mx-auto text-center space-y-10 z-10">
+        {/* Section Header with Clear Instruction (Part 2) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -52,25 +65,24 @@ export const LoveLetter: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="space-y-3"
         >
-          <div className="inline-flex items-center gap-2">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D9B76E]/40 bg-[#2b1022]/70 backdrop-blur-md shadow-md">
             <Feather className="w-4 h-4 text-[#D9B76E]" />
-            <span className="font-script text-3xl sm:text-4xl text-[#F7C5D0]">
-              From the depths of the heart
+            <span className="font-playfair text-xs sm:text-sm font-semibold tracking-wider text-[#D9B76E] uppercase">
+              THERE&apos;S A LETTER JUST FOR YOU 💌
             </span>
-            <Feather className="w-4 h-4 text-[#D9B76E]" />
           </div>
 
           <h2 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-wider text-[#FFF4EA]">
             A Letter from {birthdayConfig.creatorName}
           </h2>
 
-          <p className="font-cormorant italic text-lg sm:text-xl text-[#FFF4EA]/85 max-w-md mx-auto font-light">
-            Some words are meant to be cherished forever.
+          <p className="font-cormorant italic text-lg sm:text-xl text-[#F7C5D0] max-w-md mx-auto font-light">
+            Click the envelope to open my letter. Take your time and read every word.
           </p>
         </motion.div>
 
         {/* Envelope & Letter Assembly */}
-        <div className="relative max-w-xl mx-auto">
+        <div className="relative max-w-2xl mx-auto">
           {!isOpen ? (
             /* ENVELOPE 2.0 CARD */
             <motion.div
@@ -85,7 +97,7 @@ export const LoveLetter: React.FC = () => {
               <div className="absolute -inset-3 rounded-3xl bg-gradient-to-r from-[#D9B76E]/20 via-[#E88CA8]/25 to-[#D9B76E]/20 blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500" />
 
               {/* Envelope Body Container */}
-              <div className="relative rounded-3xl bg-gradient-to-b from-[#331127] via-[#240e1d] to-[#150612] border-2 border-[#D9B76E]/50 p-8 sm:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col items-center space-y-7">
+              <div className="relative rounded-3xl bg-gradient-to-b from-[#331127] via-[#240e1d] to-[#150612] border-2 border-[#D9B76E]/60 p-8 sm:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col items-center space-y-7">
                 {/* Gold filigree corners */}
                 <div className="absolute top-3 left-3 w-9 h-9 border-t-2 border-l-2 border-[#D9B76E]/70 rounded-tl-lg" />
                 <div className="absolute top-3 right-3 w-9 h-9 border-t-2 border-r-2 border-[#D9B76E]/70 rounded-tr-lg" />
@@ -126,6 +138,9 @@ export const LoveLetter: React.FC = () => {
                   <p className="font-playfair text-xl sm:text-2xl text-[#FFF4EA] font-semibold">
                     A Letter from {birthdayConfig.creatorName}
                   </p>
+                  <p className="text-xs text-[#FFF4EA]/70 italic pt-1">
+                    Click the envelope to unseal and read
+                  </p>
                 </div>
 
                 <button
@@ -149,7 +164,7 @@ export const LoveLetter: React.FC = () => {
               <div className="absolute -inset-4 rounded-3xl bg-[#D9B76E]/20 blur-2xl pointer-events-none" />
 
               {/* Parchment Paper Canvas */}
-              <div className="relative rounded-3xl bg-[#FFF9F2] text-[#2b1022] p-8 sm:p-14 shadow-[0_25px_60px_rgba(0,0,0,0.7)] border-4 border-[#D9B76E]/50 space-y-7 overflow-hidden">
+              <div className="relative rounded-3xl bg-[#FFF9F2] text-[#2b1022] p-6 sm:p-12 md:p-14 shadow-[0_25px_60px_rgba(0,0,0,0.7)] border-4 border-[#D9B76E]/60 space-y-6 overflow-hidden">
                 {/* Antique Parchment Texture pattern */}
                 <div
                   className="absolute inset-0 opacity-[0.05] pointer-events-none"
@@ -160,7 +175,7 @@ export const LoveLetter: React.FC = () => {
                 />
 
                 {/* Deckled Edge Header Bar */}
-                <div className="flex justify-between items-center border-b border-[#D9B76E]/40 pb-4">
+                <div className="flex justify-between items-center border-b border-[#D9B76E]/40 pb-3">
                   <div className="flex items-center gap-2 text-[#851636]">
                     <Heart className="w-4 h-4 fill-current" />
                     <span className="font-cormorant text-xs tracking-[0.25em] uppercase font-bold text-[#851636]">
@@ -172,56 +187,85 @@ export const LoveLetter: React.FC = () => {
                     onClick={handleCloseLetter}
                     className="p-1.5 rounded-full hover:bg-[#ebd5b3]/50 text-[#400D24] transition-colors cursor-pointer"
                     title="Fold and seal letter"
+                    aria-label="Fold and close letter"
                   >
                     <X className="w-5 h-5" />
                   </button>
                 </div>
 
-                {/* Salutation */}
-                <div className="pt-2">
-                  <p className="font-script text-4xl sm:text-5xl text-[#7a1230]">
-                    {loveLetter.salutation}
-                  </p>
+                {/* Scrollable Letter Container with Natural Vertical Flow */}
+                <div
+                  ref={scrollContainerRef}
+                  onScroll={handleScroll}
+                  className="max-h-[65vh] sm:max-h-[68vh] overflow-y-auto pr-2 sm:pr-4 space-y-6 scrollbar-thin select-text"
+                  style={{ scrollBehavior: 'smooth' }}
+                >
+                  {/* Salutation */}
+                  <div className="pt-2">
+                    <p className="font-script text-4xl sm:text-5xl text-[#7a1230]">
+                      {loveLetter.salutation}
+                    </p>
+                  </div>
+
+                  {/* Complete 11 Heartfelt Paragraphs */}
+                  <div key={revealKey} className="space-y-4 font-cormorant text-lg sm:text-xl text-[#2f1323] leading-relaxed">
+                    {loveLetter.paragraphs.map((para: string, i: number) => {
+                      const isSpecialGreeting = para.includes('Happy Birthday, My Dearest Nafisa');
+                      return (
+                        <motion.p
+                          key={i}
+                          initial={{ opacity: 0, y: 15 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, delay: 0.08 + Math.min(i * 0.06, 0.6) }}
+                          className={
+                            isSpecialGreeting
+                              ? 'font-playfair font-bold text-2xl sm:text-3xl text-[#851636] pt-3 pb-1 tracking-wide'
+                              : 'font-normal leading-relaxed'
+                          }
+                        >
+                          {para}
+                        </motion.p>
+                      );
+                    })}
+                  </div>
+
+                  {/* Sign-off with Gentle Reveal Animation */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.8 }}
+                    className="pt-6 border-t border-[#D9B76E]/40 space-y-1.5 text-right"
+                  >
+                    <p className="font-cormorant italic text-xl text-[#61122a]">
+                      {loveLetter.closing}
+                    </p>
+                    <p className="font-script text-4xl sm:text-5xl text-[#851636]">
+                      {loveLetter.signOff}
+                    </p>
+                  </motion.div>
                 </div>
 
-                {/* Line-by-Line Body Paragraphs with re-triggerable key */}
-                <div key={revealKey} className="space-y-4 font-cormorant text-lg sm:text-xl text-[#2f1323] leading-relaxed">
-                  {loveLetter.paragraphs.map((para: string, i: number) => (
-                    <motion.p
-                      key={i}
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.15 + i * 0.12 }}
-                      className={i === 0 ? 'font-bold text-2xl sm:text-3xl text-[#851636]' : 'font-normal'}
-                    >
-                      {para}
-                    </motion.p>
-                  ))}
-                </div>
-
-                {/* Sign-off */}
-                <div className="pt-6 border-t border-[#D9B76E]/40 space-y-1.5 text-right">
-                  <p className="font-cormorant italic text-lg text-[#61122a]">
-                    {loveLetter.closing}
-                  </p>
-                  <p className="font-script text-3xl sm:text-5xl text-[#851636]">
-                    {loveLetter.signOff}
-                  </p>
-                </div>
+                {/* Floating "Scroll down" hint if not yet scrolled */}
+                {!hasScrolled && (
+                  <div className="flex items-center justify-center gap-1.5 text-xs text-[#851636]/80 font-cormorant italic pt-1 animate-pulse">
+                    <span>Scroll down to read my whole letter</span>
+                    <ChevronDown className="w-3.5 h-3.5 text-[#851636]" />
+                  </div>
+                )}
 
                 {/* Interactive Controls: READ IT AGAIN and Close */}
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-[#D9B76E]/20 text-xs">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-[#D9B76E]/30 text-xs">
                   <button
                     onClick={handleReadAgain}
-                    className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider text-[#851636] border border-[#851636]/30 hover:bg-[#851636]/10 transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-[#851636] border border-[#851636]/30 hover:bg-[#851636]/10 transition-colors cursor-pointer"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
-                    <span>Read It Again</span>
+                    <span>Read From Beginning</span>
                   </button>
 
                   <button
                     onClick={handleCloseLetter}
-                    className="text-[#61122a] hover:underline transition-all cursor-pointer font-cormorant uppercase tracking-wider text-xs"
+                    className="text-[#61122a] hover:underline transition-all cursor-pointer font-cormorant uppercase tracking-wider text-xs font-semibold"
                   >
                     Fold & Close Letter
                   </button>

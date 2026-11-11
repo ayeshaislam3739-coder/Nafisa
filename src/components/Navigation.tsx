@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Sparkles, Menu, X } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
+import { SecretNameRevealModal } from './SecretNameRevealModal';
 
 interface NavigationProps {
   onCelebrateClick: () => void;
@@ -9,27 +10,40 @@ interface NavigationProps {
 export const Navigation: React.FC<NavigationProps> = ({ onCelebrateClick }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [secretModalOpen, setSecretModalOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
+
+  const navLinks = [
+    { label: 'Celebration', href: '#celebration', hasSurprise: true },
+    { label: 'Story', href: '#story', hasSurprise: true },
+    { label: 'Cake', href: '#cake', hasSurprise: true },
+    { label: 'Love Keys', href: '#discover-heart', hasSurprise: true },
+    { label: 'Letter', href: '#letter', hasSurprise: true },
+    { label: 'My Heart', href: '#heart-piece', hasSurprise: true },
+    { label: 'Capsules', href: '#capsules', hasSurprise: true },
+    { label: 'Message', href: '#tell-you', hasSurprise: true },
+    { label: 'Quotes', href: '#quotes', hasSurprise: true },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
+
+      // Simple active section detection
+      const scrollPos = window.scrollY + 200;
+      for (let i = navLinks.length - 1; i >= 0; i--) {
+        const el = document.querySelector(navLinks[i].href);
+        if (el && (el as HTMLElement).offsetTop <= scrollPos) {
+          setActiveSection(navLinks[i].href.slice(1));
+          return;
+        }
+      }
+      setActiveSection('hero');
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const navLinks = [
-    { label: 'Celebration', href: '#celebration' },
-    { label: 'Story', href: '#story' },
-    { label: 'Cake', href: '#cake' },
-    { label: 'Love Keys', href: '#discover-heart' },
-    { label: 'Letter', href: '#letter' },
-    { label: 'My Heart', href: '#heart-piece' },
-    { label: 'Capsules', href: '#capsules' },
-    { label: 'Message', href: '#tell-you' },
-    { label: 'Quotes', href: '#quotes' },
-  ];
 
   const handleLinkClick = (href: string) => {
     setMobileMenuOpen(false);
@@ -44,6 +58,11 @@ export const Navigation: React.FC<NavigationProps> = ({ onCelebrateClick }) => {
     onCelebrateClick();
   };
 
+  const handleTitleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setSecretModalOpen(true);
+  };
+
   return (
     <>
       <header
@@ -54,30 +73,53 @@ export const Navigation: React.FC<NavigationProps> = ({ onCelebrateClick }) => {
         }`}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-6">
-          {/* Zone 1: Brand title, one line */}
-          <a
-            href="#"
-            className="font-playfair text-xl sm:text-2xl font-bold tracking-wider gold-gradient-text uppercase whitespace-nowrap shrink-0 flex items-center gap-2"
+          {/* Zone 1: Brand title with subtle secret hint - Clicking triggers Secret Reveal (Part 3) */}
+          <button
+            onClick={handleTitleClick}
+            className="group font-playfair text-xl sm:text-2xl font-bold tracking-wider gold-gradient-text uppercase whitespace-nowrap shrink-0 flex items-center gap-2 cursor-pointer transition-transform hover:scale-[1.03] text-left"
+            title="Click to discover the secret inside your name"
+            aria-label="Secret reveal for Nafisa"
           >
-            <span>{birthdayConfig.birthdayName}</span>
-            <Heart className="w-3.5 h-3.5 fill-[#E88CA8] text-[#E88CA8]" />
-          </a>
+            <span className="relative">
+              {birthdayConfig.birthdayName}
+              {/* Subtle passing shimmer line */}
+              <span className="absolute -bottom-0.5 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#D9B76E]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            </span>
+            <span className="relative flex items-center">
+              <Heart className="w-3.5 h-3.5 fill-[#E88CA8] text-[#E88CA8] group-hover:scale-125 transition-transform" />
+              {/* Subtle glowing hint sparkle */}
+              <Sparkles className="w-3 h-3 text-[#D9B76E] animate-pulse ml-0.5 opacity-80 group-hover:opacity-100" />
+            </span>
+          </button>
 
-          {/* Zone 2: Desktop 4–5 nav links, single-line */}
-          <nav className="hidden md:flex items-center gap-7 text-xs font-semibold tracking-widest uppercase text-[#FFF4EA]/80">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLinkClick(link.href);
-                }}
-                className="hover:text-[#D9B76E] transition-colors whitespace-nowrap shrink-0 hover:underline underline-offset-8 cursor-pointer"
-              >
-                {link.label}
-              </a>
-            ))}
+          {/* Zone 2: Desktop nav links with active state & subtle surprise dot (Part 4) */}
+          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold tracking-widest uppercase text-[#FFF4EA]/80">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.slice(1);
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLinkClick(link.href);
+                  }}
+                  className={`relative py-1 transition-colors whitespace-nowrap shrink-0 hover:text-[#D9B76E] cursor-pointer ${
+                    isActive ? 'text-[#D9B76E] font-bold' : 'text-[#FFF4EA]/75'
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  {/* Subtle surprise marker dot */}
+                  {link.hasSurprise && (
+                    <span className="inline-block w-1 h-1 rounded-full bg-[#E88CA8]/70 ml-1.5 align-middle" />
+                  )}
+                  {/* Active underline indicator */}
+                  {isActive && (
+                    <span className="absolute bottom-0 inset-x-0 h-[1.5px] bg-[#D9B76E] rounded-full" />
+                  )}
+                </a>
+              );
+            })}
           </nav>
 
           {/* Zone 3: 1 primary action & Mobile Menu Toggle */}
@@ -104,28 +146,47 @@ export const Navigation: React.FC<NavigationProps> = ({ onCelebrateClick }) => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-35 md:hidden bg-black/80 backdrop-blur-md flex flex-col justify-center px-8 py-16 space-y-6">
+        <div className="fixed inset-0 z-35 md:hidden bg-black/85 backdrop-blur-md flex flex-col justify-center px-8 py-16 space-y-6">
           <div className="text-center pb-4 border-b border-[#D9B76E]/20">
             <p className="font-script text-3xl text-[#F7C5D0]">Dedicated with love</p>
-            <p className="font-playfair text-xl text-[#D9B76E] font-bold uppercase tracking-wider">
-              {birthdayConfig.birthdayName}
+            <button
+              onClick={(e) => {
+                setMobileMenuOpen(false);
+                handleTitleClick(e);
+              }}
+              className="font-playfair text-2xl text-[#D9B76E] font-bold uppercase tracking-wider inline-flex items-center gap-2 mt-1"
+            >
+              <span>{birthdayConfig.birthdayName}</span>
+              <Heart className="w-4 h-4 fill-[#E88CA8] text-[#E88CA8]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
+            </button>
+            <p className="text-[11px] text-[#FFF4EA]/60 italic pt-1">
+              Tap her name for a hidden secret
             </p>
           </div>
 
-          <nav className="flex flex-col items-center gap-5">
-            {navLinks.map((link) => (
-              <button
-                key={link.label}
-                onClick={() => handleLinkClick(link.href)}
-                className="text-base font-cormorant uppercase tracking-[0.25em] text-[#FFF4EA] hover:text-[#D9B76E] transition-colors py-2 cursor-pointer"
-              >
-                {link.label}
-              </button>
-            ))}
+          <nav className="flex flex-col items-center gap-4 max-h-[50vh] overflow-y-auto">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.slice(1);
+              return (
+                <button
+                  key={link.label}
+                  onClick={() => handleLinkClick(link.href)}
+                  className={`text-base font-cormorant uppercase tracking-[0.25em] transition-colors py-1.5 cursor-pointer flex items-center gap-2 ${
+                    isActive ? 'text-[#D9B76E] font-bold' : 'text-[#FFF4EA] hover:text-[#D9B76E]'
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  {link.hasSurprise && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#E88CA8]" />
+                  )}
+                </button>
+              );
+            })}
 
             <button
               onClick={handleCelebrate}
-              className="mt-4 inline-flex items-center gap-2 px-8 py-3 rounded-full text-xs font-semibold tracking-widest uppercase text-[#1a0815] bg-[#D9B76E] shadow-md cursor-pointer"
+              className="mt-3 inline-flex items-center gap-2 px-8 py-3 rounded-full text-xs font-semibold tracking-widest uppercase text-[#1a0815] bg-[#D9B76E] shadow-md cursor-pointer"
             >
               <Sparkles className="w-4 h-4" />
               <span>Celebrate Now</span>
@@ -133,6 +194,12 @@ export const Navigation: React.FC<NavigationProps> = ({ onCelebrateClick }) => {
           </nav>
         </div>
       )}
+
+      {/* Secret Name Reveal Modal (Part 3) */}
+      <SecretNameRevealModal
+        isOpen={secretModalOpen}
+        onClose={() => setSecretModalOpen(false)}
+      />
     </>
   );
 };

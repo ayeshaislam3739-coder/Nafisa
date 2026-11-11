@@ -6,6 +6,8 @@ import { RosePetalSystem } from './components/RosePetalSystem';
 import { HeartCursorTrail } from './components/HeartCursorTrail';
 import { Navigation } from './components/Navigation';
 import { BirthdayHero } from './components/BirthdayHero';
+import { PermanentRoseBouquet } from './components/PermanentRoseBouquet';
+import { DiscoveryGuide } from './components/DiscoveryGuide';
 
 // Code splitting: Lazy load below-the-fold components for instant initial loading
 const EmotionalStory = lazy(() => import('./components/EmotionalStory').then(m => ({ default: m.EmotionalStory })));
@@ -66,6 +68,9 @@ export default function App() {
       {/* Multi-Layered Atmosphere Background with Pure CSS Gradients */}
       <AtmosphereBackground />
 
+      {/* Permanent Romantic Rose Bouquet in the background across all sections */}
+      <PermanentRoseBouquet />
+
       {/* Lightweight Glowing Heart Cursor Trail for desktop */}
       <HeartCursorTrail />
 
@@ -82,6 +87,9 @@ export default function App() {
 
           {/* Main Birthday Hero (Loaded immediately) */}
           <BirthdayHero onDiscover={handleDiscover} />
+
+          {/* Interactive Discovery Guide near the top */}
+          <DiscoveryGuide />
 
           {/* Below-the-fold components with smooth Suspense boundary */}
           <Suspense fallback={<div className="min-h-[120px]" />}>
