@@ -1,0 +1,6 @@
+{
+  "name": "Project Nafisa - Romantic Birthday Surprise",
+  "description": "An extraordinary, luxury romantic birthday surprise experience dedicated to Nafisa by Abdul Ahad.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

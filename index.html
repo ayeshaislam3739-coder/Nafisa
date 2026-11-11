@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Compatibility shim for browser extensions monkey-patching window.fetch
+      try {
+        let currentFetch = window.fetch ? window.fetch.bind(window) : undefined;
+        Object.defineProperty(window, 'fetch', {
+          get: function() {
+            return currentFetch;
+          },
+          set: function(newFetch) {
+            currentFetch = newFetch;
+          },
+          configurable: true,
+          enumerable: true
+        });
+      } catch (err) {
+        // Silently continue if property is non-configurable
+      }
+
+      // Suppress unhandled extension errors from interfering with the application
+      window.addEventListener('error', function(event) {
+        if (event.filename && event.filename.startsWith('chrome-extension://')) {
+          event.stopImmediatePropagation();
+          event.preventDefault();
+        }
+      }, true);
+    </script>
+    <title>Project Nafisa - Romantic Birthday Surprise</title>
+    <meta name="description" content="An extraordinary, luxury romantic birthday surprise experience dedicated to Nafisa by Abdul Ahad." />
+    <meta property="og:title" content="Project Nafisa - Romantic Birthday Surprise" />
+    <meta property="og:description" content="An extraordinary, luxury romantic birthday surprise experience dedicated to Nafisa by Abdul Ahad." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#1a0a18] text-[#FFF4EA] selection:bg-[#E88CA8]/30 selection:text-[#FFF4EA] overflow-x-hidden">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
