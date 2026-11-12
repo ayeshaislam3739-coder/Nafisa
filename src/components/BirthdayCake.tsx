@@ -5,6 +5,7 @@ import { Sparkles, Wind, RotateCcw, Heart, Stars } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
 
 export const BirthdayCake: React.FC = () => {
+  const [isCoverOpen, setIsCoverOpen] = useState(false);
   const [candlesLit, setCandlesLit] = useState(true);
   const [isBlowing, setIsBlowing] = useState(false);
   const [wishMade, setWishMade] = useState(false);
@@ -16,6 +17,27 @@ export const BirthdayCake: React.FC = () => {
     'Peace, Health & Serenity',
     'A Lifetime of Love',
   ];
+
+  const handleOpenCover = () => {
+    if (isCoverOpen) return;
+    setIsCoverOpen(true);
+
+    // Celebratory confetti burst when the cover is lifted
+    confetti({
+      particleCount: 55,
+      spread: 85,
+      origin: { y: 0.55 },
+      colors: ['#D9B76E', '#FFF4EA', '#F7C5D0', '#E88CA8', '#bd244b'],
+      scalar: 1.15,
+    });
+  };
+
+  const handleResetCover = () => {
+    setIsCoverOpen(false);
+    setCandlesLit(true);
+    setWishMade(false);
+    setSelectedWish(null);
+  };
 
   const handleMakeWish = () => {
     if (!candlesLit || isBlowing) return;
@@ -49,7 +71,7 @@ export const BirthdayCake: React.FC = () => {
       {/* Background Soft Candlelight Bloom */}
       <div
         className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[550px] rounded-full pointer-events-none transition-all duration-1000 ${
-          candlesLit
+          isCoverOpen && candlesLit
             ? 'bg-gradient-to-tr from-[#D9B76E]/18 via-[#E88CA8]/14 to-transparent blur-[110px]'
             : 'bg-[#2b1022]/20 blur-[90px]'
         }`}
@@ -67,17 +89,19 @@ export const BirthdayCake: React.FC = () => {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D9B76E]/40 bg-[#2b1022]/70 backdrop-blur-md shadow-md">
             <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
             <span className="font-playfair text-xs sm:text-sm font-semibold tracking-wider text-[#D9B76E] uppercase">
-              MAKE A WISH, NAFISA 🎂
+              {isCoverOpen ? 'MAKE A WISH, NAFISA 🎂' : 'A BIRTHDAY SURPRISE IS WAITING 🎁'}
             </span>
             <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
           </div>
 
           <h2 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-wider text-[#FFF4EA]">
-            Make a Wish, Nafisa
+            {isCoverOpen ? 'Make a Wish, Nafisa' : 'A Surprise for Nafisa'}
           </h2>
 
           <p className="font-cormorant italic text-lg sm:text-xl text-[#F7C5D0] max-w-md mx-auto font-light">
-            Tap the button below to blow out the candles and make your birthday wish.
+            {isCoverOpen
+              ? 'Tap the button below to blow out the candles and make your birthday wish.'
+              : 'Touch the cake cover or tap below to unveil what Abdul Ahad prepared for you.'}
           </p>
         </motion.div>
 
@@ -86,11 +110,174 @@ export const BirthdayCake: React.FC = () => {
           {/* Candlelight Ambient Reflection on Table */}
           <div
             className={`w-80 sm:w-104 h-16 rounded-[50%] bg-[#50132b]/80 blur-2xl mx-auto -mb-8 transition-opacity duration-700 ${
-              candlesLit ? 'opacity-100' : 'opacity-40'
+              isCoverOpen && candlesLit ? 'opacity-100' : 'opacity-30'
             }`}
           />
 
           <div className="relative z-10 flex flex-col items-center">
+            {/* LUXURY ROYAL CLOCHE DOME CAKE COVER (Completely covers cake before interaction) */}
+            <AnimatePresence>
+              {!isCoverOpen && (
+                <motion.div
+                  key="cloche-cover"
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
+                  exit={{
+                    opacity: 0,
+                    y: -240,
+                    rotateX: 18,
+                    scale: 1.05,
+                    transition: { duration: 1.15, ease: [0.16, 1, 0.3, 1] },
+                  }}
+                  onClick={handleOpenCover}
+                  className="absolute -top-10 sm:-top-12 z-40 flex flex-col items-center cursor-pointer group select-none"
+                  style={{ transformOrigin: 'center bottom' }}
+                  title="Touch to reveal your surprise"
+                >
+                  {/* Floating Pulsing Hint Badge */}
+                  <motion.div
+                    animate={{ y: [0, -5, 0] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#D9B76E] via-[#FFF4EA] to-[#E88CA8] text-[#1a0815] text-[11px] sm:text-xs font-bold tracking-[0.2em] uppercase shadow-[0_0_25px_rgba(217,183,110,0.6)] mb-2 group-hover:scale-105 transition-transform"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-[#6e112c]" />
+                    <span>TOUCH TO REVEAL YOUR SURPRISE</span>
+                    <Sparkles className="w-3.5 h-3.5 text-[#6e112c]" />
+                  </motion.div>
+
+                  {/* Soft Aura Glow around Cloche */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-t from-[#D9B76E]/20 via-[#E88CA8]/15 to-transparent blur-xl pointer-events-none group-hover:opacity-100 transition-opacity" />
+
+                  {/* Ornate Royal Cloche Dome SVG */}
+                  <svg
+                    viewBox="0 0 420 340"
+                    className="w-[320px] sm:w-[400px] md:w-[420px] h-auto filter drop-shadow-[0_20px_45px_rgba(0,0,0,0.85)] group-hover:drop-shadow-[0_25px_50px_rgba(217,183,110,0.4)] transition-all duration-300"
+                  >
+                    <defs>
+                      <radialGradient id="clocheVelvet" cx="35%" cy="30%" r="70%">
+                        <stop offset="0%" stopColor="#7E1C44" />
+                        <stop offset="25%" stopColor="#520E2C" />
+                        <stop offset="65%" stopColor="#300619" />
+                        <stop offset="95%" stopColor="#18020B" />
+                        <stop offset="100%" stopColor="#0B0105" />
+                      </radialGradient>
+
+                      <linearGradient id="clocheGold" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="#FFF4D0" />
+                        <stop offset="35%" stopColor="#D9B76E" />
+                        <stop offset="70%" stopColor="#A8812C" />
+                        <stop offset="100%" stopColor="#5E430F" />
+                      </linearGradient>
+
+                      <linearGradient id="clocheSheen" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#FFF4EA" stopOpacity="0.75" />
+                        <stop offset="35%" stopColor="#F7C5D0" stopOpacity="0.35" />
+                        <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* FINIAL HANDLE (Ring & Crown) */}
+                    <circle cx="210" cy="18" r="14" fill="none" stroke="url(#clocheGold)" strokeWidth="4" />
+                    <circle cx="210" cy="34" r="8" fill="url(#clocheGold)" />
+                    <ellipse cx="210" cy="42" rx="16" ry="6" fill="url(#clocheGold)" />
+
+                    {/* MAIN DOME BODY */}
+                    <path
+                      d="M 25 310 
+                         C 25 240, 55 160, 115 85 
+                         C 150 42, 178 40, 210 40 
+                         C 242 40, 270 42, 305 85 
+                         C 365 160, 395 240, 395 310 
+                         C 395 325, 25 325, 25 310 Z"
+                      fill="url(#clocheVelvet)"
+                      stroke="url(#clocheGold)"
+                      strokeWidth="2"
+                    />
+
+                    {/* Specular Curved Sheen */}
+                    <path
+                      d="M 125 90 C 75 160, 52 235, 48 295"
+                      stroke="url(#clocheSheen)"
+                      strokeWidth="7"
+                      strokeLinecap="round"
+                      fill="none"
+                    />
+
+                    {/* Top Scallop Trim */}
+                    <path
+                      d="M 150 95 C 180 88, 240 88, 270 95"
+                      stroke="url(#clocheGold)"
+                      strokeWidth="2.5"
+                      fill="none"
+                    />
+
+                    {/* Mid Filigree Swag Band */}
+                    <path
+                      d="M 50 205 C 110 220, 310 220, 370 205"
+                      stroke="url(#clocheGold)"
+                      strokeWidth="2.5"
+                      fill="none"
+                      strokeDasharray="4 3"
+                    />
+
+                    {/* Royal Embossed Presentation Plaque */}
+                    <g transform="translate(130, 155)">
+                      <rect
+                        x="0"
+                        y="0"
+                        width="160"
+                        height="54"
+                        rx="12"
+                        fill="#240514"
+                        stroke="url(#clocheGold)"
+                        strokeWidth="2"
+                        filter="drop-shadow(0 4px 10px rgba(0,0,0,0.6))"
+                      />
+                      <circle cx="8" cy="8" r="2.5" fill="url(#clocheGold)" />
+                      <circle cx="152" cy="8" r="2.5" fill="url(#clocheGold)" />
+                      <circle cx="8" cy="46" r="2.5" fill="url(#clocheGold)" />
+                      <circle cx="152" cy="46" r="2.5" fill="url(#clocheGold)" />
+                      <text
+                        x="80"
+                        y="22"
+                        textAnchor="middle"
+                        fill="#D9B76E"
+                        fontSize="9"
+                        fontWeight="700"
+                        letterSpacing="2.5"
+                        fontFamily="sans-serif"
+                      >
+                        A BIRTHDAY SURPRISE
+                      </text>
+                      <text
+                        x="80"
+                        y="40"
+                        textAnchor="middle"
+                        fill="#FFF4EA"
+                        fontSize="14"
+                        fontFamily="serif"
+                        fontStyle="italic"
+                        letterSpacing="1.5"
+                      >
+                        For Nafisa ♥
+                      </text>
+                    </g>
+
+                    {/* Lower Scalloped Filigree */}
+                    <path
+                      d="M 32 280 C 80 295, 340 295, 388 280"
+                      stroke="url(#clocheGold)"
+                      strokeWidth="1.5"
+                      fill="none"
+                    />
+
+                    {/* Bottom Beaded Rim Base sitting on Platter */}
+                    <ellipse cx="210" cy="312" rx="186" ry="12" fill="#200411" stroke="url(#clocheGold)" strokeWidth="2.5" />
+                  </svg>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* 3 CANDLES ON TOP */}
             <div className="flex justify-center items-end gap-6 sm:gap-9 mb-[-6px] z-30">
               {[-1, 0, 1].map((offset, idx) => (
@@ -244,8 +431,35 @@ export const BirthdayCake: React.FC = () => {
 
         {/* WISH CONTROLS & REVEAL SECTION */}
         <div className="space-y-6 max-w-xl mx-auto">
-          {candlesLit ? (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5">
+          {!isCoverOpen ? (
+            /* STAGE 1: BEFORE COVER OPENED */
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="space-y-4"
+            >
+              <button
+                onClick={handleOpenCover}
+                className="group relative inline-flex items-center gap-3 px-10 py-4 rounded-full text-sm font-semibold tracking-[0.2em] uppercase text-[#1a0815] bg-gradient-to-r from-[#D9B76E] via-[#FFF0D0] to-[#E88CA8] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 shadow-[0_0_35px_rgba(217,183,110,0.45)] cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-[#6e112c]" />
+                <span>TOUCH TO REVEAL YOUR SURPRISE 🎁</span>
+                <Sparkles className="w-4 h-4 text-[#6e112c]" />
+              </button>
+
+              <p className="text-xs text-[#FFF4EA]/70 italic">
+                Touch the covered cake or tap the button above to unveil your birthday surprise, Nafisa.
+              </p>
+            </motion.div>
+          ) : candlesLit ? (
+            /* STAGE 2: AFTER COVER OPENED - CANDLES LIT */
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="space-y-5"
+            >
               {/* Optional Wish Prompts for Nafisa */}
               <div className="space-y-2">
                 <p className="text-xs uppercase tracking-widest text-[#D9B76E] font-semibold">
@@ -290,9 +504,18 @@ export const BirthdayCake: React.FC = () => {
                 </button>
               </div>
 
-              <p className="text-xs text-[#FFF4EA]/60 italic">
-                Close your eyes, breathe in the moment, and blow out the candles.
-              </p>
+              <div className="flex flex-col items-center gap-2">
+                <p className="text-xs text-[#FFF4EA]/60 italic">
+                  Close your eyes, breathe in the moment, and blow out the candles.
+                </p>
+                <button
+                  onClick={handleResetCover}
+                  className="inline-flex items-center gap-1.5 text-[11px] text-[#FFF4EA]/45 hover:text-[#D9B76E] tracking-widest uppercase transition-colors pt-1 cursor-pointer"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span>Cover cake again</span>
+                </button>
+              </div>
             </motion.div>
           ) : (
             <motion.div
@@ -321,13 +544,20 @@ export const BirthdayCake: React.FC = () => {
                 I really hope that every wish in your heart comes true this year, Nafisa. You deserve all the peace, smiles, and happiness in the world.
               </p>
 
-              <div className="pt-2">
+              <div className="pt-2 flex flex-wrap justify-center items-center gap-3">
                 <button
                   onClick={handleRelight}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase text-[#FFF4EA] border border-[#D9B76E]/50 hover:bg-[#D9B76E]/15 hover:border-[#D9B76E] transition-all cursor-pointer"
                 >
                   <RotateCcw className="w-3.5 h-3.5 text-[#D9B76E]" />
                   <span>Light the candles again</span>
+                </button>
+                <button
+                  onClick={handleResetCover}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase text-[#FFF4EA]/70 border border-[#FFF4EA]/20 hover:bg-[#FFF4EA]/10 transition-all cursor-pointer"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-[#D9B76E]" />
+                  <span>Cover cake again</span>
                 </button>
               </div>
             </motion.div>
