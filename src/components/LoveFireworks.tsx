@@ -44,14 +44,14 @@ export const LoveFireworks: React.FC<LoveFireworksProps> = ({ onPetalSurge }) =>
   };
 
   return (
-    <section className="relative py-24 px-4 overflow-hidden text-center">
-      <div className="relative max-w-4xl mx-auto space-y-8 z-10">
+    <section className="relative py-10 sm:py-14 px-4 overflow-hidden text-center">
+      <div className="relative max-w-4xl mx-auto space-y-6 z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="space-y-3"
+          className="space-y-2.5"
         >
           <div className="inline-flex items-center gap-2">
             <Flame className="w-4 h-4 text-[#D9B76E]" />
@@ -61,7 +61,7 @@ export const LoveFireworks: React.FC<LoveFireworksProps> = ({ onPetalSurge }) =>
             <Flame className="w-4 h-4 text-[#D9B76E]" />
           </div>
 
-          <h2 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-wider text-[#FFF4EA]">
+          <h2 className="font-playfair text-3xl sm:text-5xl font-bold uppercase tracking-wider text-[#FFF4EA]">
             Light Up Your Happiness
           </h2>
 
@@ -74,7 +74,7 @@ export const LoveFireworks: React.FC<LoveFireworksProps> = ({ onPetalSurge }) =>
           <button
             onClick={handleLightUp}
             disabled={isFiring}
-            className="group relative inline-flex items-center gap-3 px-10 py-4 rounded-full text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-[#1a0815] bg-gradient-to-r from-[#D9B76E] via-[#FFF0D0] to-[#E88CA8] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 shadow-[0_0_35px_rgba(217,183,110,0.4)] cursor-pointer disabled:opacity-75"
+            className="group relative inline-flex items-center gap-3 px-9 py-3.5 rounded-full text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-[#1a0815] bg-gradient-to-r from-[#D9B76E] via-[#FFF0D0] to-[#D9B76E] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 shadow-[0_0_30px_rgba(217,183,110,0.4)] cursor-pointer disabled:opacity-75"
           >
             <Sparkles className="w-4 h-4 text-[#6e112c]" />
             <span>{isFiring ? 'Lighting the Sky...' : 'Light Up Your Happiness'}</span>
@@ -83,29 +83,27 @@ export const LoveFireworks: React.FC<LoveFireworksProps> = ({ onPetalSurge }) =>
         </div>
 
         {/* Revealed Birthday Wish */}
-        <div className="min-h-[120px] flex items-center justify-center">
-          <AnimatePresence>
-            {wishRevealed && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 15 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="max-w-xl p-6 rounded-3xl bg-[#2e1024]/70 border border-[#D9B76E]/40 backdrop-blur-md shadow-2xl space-y-2"
-              >
-                <div className="inline-flex items-center gap-2 text-[#D9B76E]">
-                  <Sparkles className="w-4 h-4 animate-pulse" />
-                  <span className="font-cormorant text-xs tracking-[0.25em] uppercase font-bold text-[#D9B76E]">
-                    A Sky Full of Wishes for Nafisa
-                  </span>
-                  <Sparkles className="w-4 h-4 animate-pulse" />
-                </div>
-                <p className="font-playfair text-xl sm:text-2xl font-bold gold-gradient-text uppercase">
-                  May your year shine with unfading brilliance and endless reasons to smile.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        <AnimatePresence>
+          {wishRevealed && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 14 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="max-w-xl mx-auto p-6 rounded-2xl bg-gradient-to-b from-[#1F050E]/90 to-[#0C0105]/95 border border-[#D9B76E]/45 backdrop-blur-md shadow-2xl space-y-2"
+            >
+              <div className="inline-flex items-center gap-2 text-[#D9B76E]">
+                <Sparkles className="w-4 h-4 animate-pulse" />
+                <span className="font-cormorant text-xs tracking-[0.25em] uppercase font-bold text-[#D9B76E]">
+                  A Sky Full of Wishes for Nafisa
+                </span>
+                <Sparkles className="w-4 h-4 animate-pulse" />
+              </div>
+              <p className="font-playfair text-xl sm:text-2xl font-bold gold-gradient-text uppercase">
+                May your year shine with unfading brilliance and endless reasons to smile.
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

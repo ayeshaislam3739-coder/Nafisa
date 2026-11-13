@@ -1,38 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Clock, Heart, Sparkles, Hourglass } from 'lucide-react';
+import { Clock, Heart, Sparkles } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
 
+// Target: November 16, 2026 — 12:00 AM Bangladesh Standard Time (Asia/Dhaka, UTC+06:00)
+const BIRTHDAY_TARGET_MS = new Date('2026-11-16T00:00:00+06:00').getTime();
+
+function getTimeRemaining(nowMs: number) {
+  const diff = BIRTHDAY_TARGET_MS - nowMs;
+  if (diff <= 0) {
+    return { days: '00', hours: '00', minutes: '00', seconds: '00', isCompleted: true };
+  }
+  const totalSeconds = Math.floor(diff / 1000);
+  return {
+    days: String(Math.floor(totalSeconds / 86400)).padStart(2, '0'),
+    hours: String(Math.floor((totalSeconds % 86400) / 3600)).padStart(2, '0'),
+    minutes: String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0'),
+    seconds: String(totalSeconds % 60).padStart(2, '0'),
+    isCompleted: false,
+  };
+}
+
 export const CelebrationClock: React.FC = () => {
-  const [time, setTime] = useState(new Date());
+  const [countdown, setCountdown] = useState(() => getTimeRemaining(Date.now()));
 
   useEffect(() => {
+    if (countdown.isCompleted) return;
     const timer = setInterval(() => {
-      if (!document.hidden) {
-        setTime(new Date());
+      const next = getTimeRemaining(Date.now());
+      setCountdown(next);
+      if (next.isCompleted) {
+        clearInterval(timer);
       }
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [countdown.isCompleted]);
 
-  const hours = String(time.getHours()).padStart(2, '0');
-  const minutes = String(time.getMinutes()).padStart(2, '0');
-  const seconds = String(time.getSeconds()).padStart(2, '0');
-
-  // Decorative Celebration Units
   const units = [
-    { label: 'Hours of Joy', value: hours },
-    { label: 'Minutes of Grace', value: minutes },
-    { label: 'Seconds of Wonder', value: seconds },
+    { label: 'Days', value: countdown.days },
+    { label: 'Hours', value: countdown.hours },
+    { label: 'Minutes', value: countdown.minutes },
+    { label: 'Seconds', value: countdown.seconds },
   ];
 
   return (
-    <section id="moments" className="relative py-28 px-4 overflow-hidden">
+    <section id="moments" className="relative py-12 sm:py-16 px-4 overflow-hidden">
       {/* Background Soft Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[500px] rounded-full bg-gradient-to-tr from-[#D9B76E]/15 via-[#E88CA8]/12 to-transparent blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] h-[420px] rounded-full bg-gradient-to-tr from-[#D9B76E]/14 via-[#7A102B]/22 to-transparent blur-[110px] pointer-events-none" />
 
-      <div className="relative max-w-4xl mx-auto text-center space-y-12 z-10">
+      <div className="relative max-w-4xl mx-auto text-center space-y-7 z-10">
         {/* Section Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -58,37 +75,55 @@ export const CelebrationClock: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Animated Celebration Chronometer Display */}
-        <div className="relative max-w-2xl mx-auto p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#2e1024]/85 via-[#240e1d]/90 to-[#180713]/95 border-2 border-[#D9B76E]/40 shadow-2xl backdrop-blur-md space-y-8">
-          <div className="flex items-center justify-center gap-2 text-xs uppercase tracking-[0.3em] text-[#D9B76E] font-semibold">
+        {/* Animated Countdown or Completed Birthday Celebration */}
+        <div className="relative max-w-3xl mx-auto p-6 sm:p-10 rounded-2xl bg-gradient-to-b from-[#1E050E]/92 via-[#130309]/95 to-[#0A0105] border border-[#D9B76E]/45 shadow-2xl backdrop-blur-md space-y-6">
+          <div className="flex items-center justify-center gap-2 text-xs uppercase tracking-[0.26em] text-[#D9B76E] font-semibold">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Celebration Chronometer · Living in This Moment</span>
+            <span>
+              {countdown.isCompleted
+                ? `November 16, 2026 · ${birthdayConfig.birthdayName}'s Birthday`
+                : 'Countdown to 16 November 2026 · Bangladesh Time'}
+            </span>
             <Sparkles className="w-3.5 h-3.5" />
           </div>
 
-          {/* Time digits grid */}
-          <div className="grid grid-cols-3 gap-3 sm:gap-6">
-            {units.map((u, i) => (
-              <div
-                key={u.label}
-                className="flex flex-col items-center justify-center p-4 sm:p-6 rounded-2xl bg-[#1b0817]/80 border border-[#D9B76E]/30 shadow-inner"
-              >
-                <span className="font-playfair text-4xl sm:text-6xl md:text-7xl font-bold gold-gradient-text tabular-nums">
-                  {u.value}
-                </span>
-                <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#F7C5D0]/80 mt-2 font-medium">
-                  {u.label}
-                </span>
+          {!countdown.isCompleted ? (
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5">
+              {units.map((u) => (
+                <div
+                  key={u.label}
+                  className="flex flex-col items-center justify-center p-4 sm:p-5 rounded-xl bg-[#0F0207]/90 border border-[#D9B76E]/30 shadow-inner"
+                >
+                  <span className="font-playfair text-4xl sm:text-5xl font-bold gold-gradient-text tabular-nums">
+                    {u.value}
+                  </span>
+                  <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#F7C5D0]/80 mt-2 font-medium">
+                    {u.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-3 py-4">
+              <div className="flex items-center justify-center gap-2">
+                <Heart className="w-5 h-5 fill-[#C82348] text-[#D9B76E] animate-pulse" />
+                <Sparkles className="w-5 h-5 text-[#FFE29A]" />
               </div>
-            ))}
-          </div>
+              <h3 className="font-playfair text-3xl sm:text-4xl font-bold uppercase tracking-wider gold-gradient-text">
+                HAPPY BIRTHDAY, NAFISA!
+              </h3>
+              <p className="font-cormorant italic text-xl sm:text-2xl text-[#FFF4EA]/90 max-w-xl mx-auto">
+                Today is all about you. May your day be filled with happiness, beautiful memories, and endless love.
+              </p>
+            </div>
+          )}
 
-          <div className="space-y-2 border-t border-[#D9B76E]/20 pt-6">
+          <div className="space-y-2 border-t border-[#D9B76E]/20 pt-5">
             <p className="font-cormorant italic text-xl sm:text-2xl text-[#FFF4EA]">
               &ldquo;No clock can count the countless ways you bring light into the lives around you.&rdquo;
             </p>
             <p className="font-script text-2xl text-[#E88CA8]">
-              Happy Birthday, Nafisa · Forever Cherished
+              Happy Birthday, {birthdayConfig.birthdayName} · Forever Cherished
             </p>
           </div>
         </div>

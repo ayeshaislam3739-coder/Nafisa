@@ -28,20 +28,20 @@ export const EmotionalStory: React.FC = () => {
   };
 
   return (
-    <section id="story" className="relative py-28 px-4 overflow-hidden">
+    <section id="story" className="relative py-12 sm:py-16 px-4 overflow-hidden">
       {/* Background Soft Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-gradient-to-tr from-[#400D24]/30 via-[#E88CA8]/15 to-transparent blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[620px] h-[440px] rounded-full bg-gradient-to-tr from-[#6E0D26]/28 via-[#D9B76E]/12 to-transparent blur-[110px] pointer-events-none" />
 
-      <div className="relative max-w-4xl mx-auto text-center space-y-10 z-10">
+      <div className="relative max-w-4xl mx-auto text-center space-y-7 z-10">
         {/* Section Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="space-y-3"
+          className="space-y-2.5"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D9B76E]/40 bg-[#2b1022]/70 backdrop-blur-md shadow-md">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D9B76E]/40 bg-[#1B040D]/80 backdrop-blur-md shadow-md">
             <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
             <span className="font-playfair text-xs sm:text-sm font-semibold tracking-wider text-[#D9B76E] uppercase">
               DISCOVER MY LITTLE MESSAGE
@@ -63,7 +63,7 @@ export const EmotionalStory: React.FC = () => {
           {/* Outer glow ring */}
           <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-[#D9B76E]/20 via-[#E88CA8]/20 to-[#D9B76E]/20 blur-xl opacity-80" />
 
-          <div className="relative min-h-[220px] sm:min-h-[240px] rounded-3xl bg-gradient-to-b from-[#2e1024]/80 via-[#240e1d]/90 to-[#180713]/95 border-2 border-[#D9B76E]/40 p-8 sm:p-12 shadow-2xl backdrop-blur-md flex flex-col justify-between items-center">
+          <div className="relative min-h-[200px] rounded-2xl bg-gradient-to-b from-[#1E050E]/92 via-[#130309]/95 to-[#0A0105] border border-[#D9B76E]/45 p-6 sm:p-10 shadow-2xl backdrop-blur-md flex flex-col justify-between items-center">
             {/* Step / Chapter index */}
             <div className="w-full flex justify-between items-center text-xs text-[#D9B76E] tracking-[0.25em] uppercase font-semibold border-b border-[#D9B76E]/20 pb-3">
               <span>Chapter 0{currentIndex + 1}</span>
@@ -136,7 +136,7 @@ export const EmotionalStory: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="pt-6 space-y-4"
+          className="pt-2 space-y-3"
         >
           {/* Animated 3D-Style Heart */}
           <div className="flex justify-center">

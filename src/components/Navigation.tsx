@@ -14,15 +14,13 @@ export const Navigation: React.FC<NavigationProps> = ({ onCelebrateClick }) => {
   const [activeSection, setActiveSection] = useState('hero');
 
   const navLinks = [
-    { label: 'Celebration', href: '#celebration', hasSurprise: true },
-    { label: 'Story', href: '#story', hasSurprise: true },
-    { label: 'Cake', href: '#cake', hasSurprise: true },
-    { label: 'Love Keys', href: '#discover-heart', hasSurprise: true },
+    { label: 'Memories', href: '#story', hasSurprise: true },
     { label: 'Letter', href: '#letter', hasSurprise: true },
-    { label: 'My Heart', href: '#heart-piece', hasSurprise: true },
-    { label: 'Capsules', href: '#capsules', hasSurprise: true },
-    { label: 'Message', href: '#tell-you', hasSurprise: true },
-    { label: 'Quotes', href: '#quotes', hasSurprise: true },
+    { label: 'Forever', href: '#celebration', hasSurprise: true },
+    { label: 'Boutique', href: '#cake', hasSurprise: true },
+    { label: 'Heart', href: '#heart-reveal', hasSurprise: true },
+    { label: 'Notes', href: '#tell-you', hasSurprise: true },
+    { label: 'Experiences', href: '#experiences', hasSurprise: true },
   ];
 
   useEffect(() => {
@@ -68,7 +66,7 @@ export const Navigation: React.FC<NavigationProps> = ({ onCelebrateClick }) => {
       <header
         className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
           scrolled
-            ? 'bg-[#180715]/90 backdrop-blur-md border-b border-[#D9B76E]/20 py-3 shadow-lg'
+            ? 'bg-[#120308]/92 backdrop-blur-md border-b border-[#D9B76E]/25 py-3 shadow-lg'
             : 'bg-transparent py-4 sm:py-5'
         }`}
       >
@@ -93,7 +91,7 @@ export const Navigation: React.FC<NavigationProps> = ({ onCelebrateClick }) => {
           </button>
 
           {/* Zone 2: Desktop nav links with active state & subtle surprise dot (Part 4) */}
-          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold tracking-widest uppercase text-[#FFF4EA]/80">
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-6 text-xs font-semibold tracking-widest uppercase text-[#FFF4EA]/80">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.slice(1);
               return (
@@ -135,7 +133,7 @@ export const Navigation: React.FC<NavigationProps> = ({ onCelebrateClick }) => {
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-full text-[#FFF4EA] hover:bg-white/10 transition-colors cursor-pointer"
+              className="lg:hidden p-2 rounded-full text-[#FFF4EA] hover:bg-white/10 transition-colors cursor-pointer"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -146,7 +144,7 @@ export const Navigation: React.FC<NavigationProps> = ({ onCelebrateClick }) => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-35 md:hidden bg-black/85 backdrop-blur-md flex flex-col justify-center px-8 py-16 space-y-6">
+        <div className="fixed inset-0 z-35 lg:hidden bg-black/85 backdrop-blur-md flex flex-col justify-center px-8 py-16 space-y-6">
           <div className="text-center pb-4 border-b border-[#D9B76E]/20">
             <p className="font-script text-3xl text-[#F7C5D0]">Dedicated with love</p>
             <button

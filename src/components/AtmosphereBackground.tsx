@@ -23,33 +23,37 @@ export const AtmosphereBackground: React.FC = memo(() => {
 
   return (
     <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none">
-      {/* Deep Romantic Base Gradient (Zero GPU fill overhead) */}
+      {/* Deep Cinematic Black & Dark Burgundy Base Gradient */}
       <div
         className="absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse at 50% 15%, #380e22 0%, #1f0b22 45%, #0e040f 100%)',
+          background:
+            'radial-gradient(ellipse at 50% 12%, #290612 0%, #14030A 44%, #060104 100%)',
         }}
       />
 
-      {/* Lightweight Ambient Warm Glow Layers (Using smooth radial gradients instead of heavy 110px blur filters) */}
+      {/* Soft Cinematic Warm Gold & Crimson Ambient Lighting */}
       <div
         className="absolute -top-24 left-1/4 w-[480px] h-[480px] opacity-20 pointer-events-none transform-gpu"
         style={{
-          background: 'radial-gradient(circle, rgba(217, 183, 110, 0.4) 0%, rgba(232, 140, 168, 0.15) 45%, transparent 70%)',
+          background:
+            'radial-gradient(circle, rgba(217, 183, 110, 0.36) 0%, rgba(158, 25, 56, 0.16) 48%, transparent 72%)',
         }}
       />
 
       <div
-        className="absolute -top-28 right-1/4 w-[500px] h-[500px] opacity-15 pointer-events-none transform-gpu"
+        className="absolute top-1/3 right-1/5 w-[500px] h-[500px] opacity-18 pointer-events-none transform-gpu"
         style={{
-          background: 'radial-gradient(circle, rgba(185, 165, 232, 0.35) 0%, rgba(247, 197, 208, 0.12) 45%, transparent 70%)',
+          background:
+            'radial-gradient(circle, rgba(138, 16, 44, 0.34) 0%, rgba(64, 13, 36, 0.14) 50%, transparent 72%)',
         }}
       />
 
       <div
-        className="absolute top-1/2 left-1/3 w-[550px] h-[550px] opacity-25 pointer-events-none transform-gpu"
+        className="absolute bottom-0 left-1/3 w-[560px] h-[560px] opacity-20 pointer-events-none transform-gpu"
         style={{
-          background: 'radial-gradient(circle, rgba(145, 23, 61, 0.3) 0%, transparent 70%)',
+          background:
+            'radial-gradient(circle, rgba(110, 12, 34, 0.32) 0%, transparent 70%)',
         }}
       />
 

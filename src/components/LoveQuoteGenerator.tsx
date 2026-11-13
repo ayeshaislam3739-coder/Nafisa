@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Sparkles, Heart, RefreshCw, Copy, Check } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
+import { VintageLetterCard } from './VintageLetterCard';
 
 export const LoveQuoteGenerator: React.FC = () => {
   const quotes = birthdayConfig.romanticQuotes;
@@ -48,26 +49,26 @@ export const LoveQuoteGenerator: React.FC = () => {
   };
 
   return (
-    <section id="quotes" className="relative py-28 px-4 overflow-hidden">
+    <section id="quotes" className="relative py-12 sm:py-16 px-4 overflow-hidden">
       {/* Background Soft Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[500px] rounded-full bg-gradient-to-tr from-[#E88CA8]/15 via-[#D9B76E]/12 to-transparent blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] h-[420px] rounded-full bg-gradient-to-tr from-[#7A102B]/24 via-[#D9B76E]/12 to-transparent blur-[110px] pointer-events-none" />
 
-      <div className="relative max-w-4xl mx-auto text-center space-y-10 z-10">
+      <div className="relative max-w-4xl mx-auto text-center space-y-7 z-10">
         {/* Section Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="space-y-3"
+          className="space-y-2.5"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E88CA8]/15 border border-[#E88CA8]/35 text-[#F7C5D0] text-xs uppercase tracking-[0.25em] font-semibold">
-            <Heart className="w-3.5 h-3.5 fill-[#E88CA8] text-[#E88CA8]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#9E1938]/20 border border-[#D9B76E]/35 text-[#F7C5D0] text-xs uppercase tracking-[0.25em] font-semibold">
+            <Heart className="w-3.5 h-3.5 fill-[#D9B76E] text-[#D9B76E]" />
             <span>A LITTLE LOVE NOTE FOR YOU</span>
             <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
           </div>
 
-          <h2 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-wider text-[#FFF4EA]">
+          <h2 className="font-playfair text-3xl sm:text-5xl font-bold uppercase tracking-wider text-[#FFF4EA]">
             A Little Love, A Little Magic
           </h2>
 
@@ -76,38 +77,40 @@ export const LoveQuoteGenerator: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Dynamic Quote Box */}
+        {/* Dynamic Antique Parchment Quote Box */}
         <div className="relative max-w-2xl mx-auto">
-          {/* Outer glow ring */}
-          <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-[#D9B76E]/20 via-[#E88CA8]/20 to-[#D9B76E]/20 blur-xl opacity-80" />
+          <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-[#D9B76E]/18 via-[#9E1938]/18 to-[#D9B76E]/18 blur-xl opacity-80" />
 
-          <div className="relative min-h-[220px] rounded-3xl bg-gradient-to-b from-[#2e1024]/85 via-[#240e1d]/90 to-[#180713]/95 border-2 border-[#D9B76E]/40 p-8 sm:p-12 shadow-2xl backdrop-blur-md flex flex-col justify-between items-center">
+          <VintageLetterCard
+            variant="romance"
+            className="min-h-[200px] p-6 sm:p-10 flex flex-col justify-between items-center"
+          >
             {/* Header / Counter */}
-            <div className="w-full flex justify-between items-center text-xs text-[#D9B76E] tracking-[0.25em] uppercase font-semibold border-b border-[#D9B76E]/20 pb-3">
+            <div className="w-full flex justify-between items-center text-xs text-[#7A122E] tracking-[0.24em] uppercase font-bold border-b border-[#7A1530]/20 pb-3">
               <span className="flex items-center gap-1.5">
-                <Heart className="w-3.5 h-3.5 fill-[#E88CA8] text-[#E88CA8]" />
+                <Heart className="w-3.5 h-3.5 fill-[#9E1938] text-[#9E1938]" />
                 Quote {queueIndex + 1} of {quotes.length}
               </span>
               <button
                 onClick={handleCopyQuote}
-                className="inline-flex items-center gap-1 text-[11px] text-[#FFF4EA]/70 hover:text-[#D9B76E] transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 text-[11px] text-[#5C1225] hover:text-[#7A122E] transition-colors cursor-pointer font-semibold"
                 title="Copy quote"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Copied' : 'Copy'}</span>
               </button>
             </div>
 
             {/* Main Quote Content */}
-            <div className="py-6 my-auto">
+            <div className="py-5 my-auto">
               <AnimatePresence mode="wait">
                 <motion.p
                   key={currentQuote}
-                  initial={{ opacity: 0, y: 15, scale: 0.97 }}
+                  initial={{ opacity: 0, y: 12, scale: 0.97 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -15, scale: 0.97 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="font-cormorant italic text-2xl sm:text-3xl md:text-4xl text-[#FFF4EA] leading-relaxed font-light"
+                  exit={{ opacity: 0, y: -12, scale: 0.97 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="font-cormorant italic text-2xl sm:text-3xl text-[#260D14] leading-relaxed font-medium"
                 >
                   &ldquo;{currentQuote}&rdquo;
                 </motion.p>
@@ -115,22 +118,22 @@ export const LoveQuoteGenerator: React.FC = () => {
             </div>
 
             {/* Bottom Footer Details */}
-            <div className="w-full pt-3 flex justify-between items-center border-t border-[#D9B76E]/20 text-xs">
-              <span className="font-script text-xl text-[#F7C5D0]">
+            <div className="w-full pt-3 flex justify-between items-center border-t border-[#7A1530]/20 text-xs">
+              <span className="font-script text-2xl text-[#7A122E]">
                 To Nafisa · With Love
               </span>
-              <span className="text-[#FFF4EA]/50 italic">
+              <span className="text-[#5C1225] italic font-medium">
                 From Abdul Ahad
               </span>
             </div>
-          </div>
+          </VintageLetterCard>
         </div>
 
         {/* Action Button: SHOW ME SOMETHING BEAUTIFUL */}
         <div>
           <button
             onClick={handleNextQuote}
-            className="group relative inline-flex items-center gap-3 px-9 py-4 rounded-full text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-[#1a0815] bg-gradient-to-r from-[#D9B76E] via-[#FFF0D0] to-[#E88CA8] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 shadow-[0_0_35px_rgba(217,183,110,0.4)] cursor-pointer"
+            className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-[#1a0815] bg-gradient-to-r from-[#D9B76E] via-[#FFF0D0] to-[#D9B76E] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 shadow-[0_0_30px_rgba(217,183,110,0.4)] cursor-pointer"
           >
             <Sparkles className="w-4 h-4 text-[#6e112c]" />
             <span>Show Me Something Beautiful</span>

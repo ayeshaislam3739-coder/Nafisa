@@ -7,24 +7,20 @@ import { HeartCursorTrail } from './components/HeartCursorTrail';
 import { Navigation } from './components/Navigation';
 import { BirthdayHero } from './components/BirthdayHero';
 import { WebsiteBackgroundRose } from './components/WebsiteBackgroundRose';
-import { DiscoveryGuide } from './components/DiscoveryGuide';
+import { WebsiteShowcaseSection } from './components/WebsiteShowcaseSection';
+import { SectionDivider } from './components/SectionDivider';
 
-// Code splitting: Lazy load below-the-fold components for instant initial loading
-const EmotionalStory = lazy(() => import('./components/EmotionalStory').then(m => ({ default: m.EmotionalStory })));
-const CelebrationScene = lazy(() => import('./components/CelebrationScene').then(m => ({ default: m.CelebrationScene })));
-const BirthdayCake = lazy(() => import('./components/BirthdayCake').then(m => ({ default: m.BirthdayCake })));
-const InteractiveLoveButtons = lazy(() => import('./components/InteractiveLoveButtons').then(m => ({ default: m.InteractiveLoveButtons })));
-const OrbitingHeart3D = lazy(() => import('./components/OrbitingHeart3D').then(m => ({ default: m.OrbitingHeart3D })));
-const LoveLetter = lazy(() => import('./components/LoveLetter').then(m => ({ default: m.LoveLetter })));
-const PieceOfMyHeart = lazy(() => import('./components/PieceOfMyHeart').then(m => ({ default: m.PieceOfMyHeart })));
-const MessageCapsules = lazy(() => import('./components/MessageCapsules').then(m => ({ default: m.MessageCapsules })));
-const SomethingToTellYou = lazy(() => import('./components/SomethingToTellYou').then(m => ({ default: m.SomethingToTellYou })));
-const CelebrationClock = lazy(() => import('./components/CelebrationClock').then(m => ({ default: m.CelebrationClock })));
-const LoveQuoteGenerator = lazy(() => import('./components/LoveQuoteGenerator').then(m => ({ default: m.LoveQuoteGenerator })));
-const SurpriseGift = lazy(() => import('./components/SurpriseGift').then(m => ({ default: m.SurpriseGift })));
-const LoveFireworks = lazy(() => import('./components/LoveFireworks').then(m => ({ default: m.LoveFireworks })));
-const FinalCelebration = lazy(() => import('./components/FinalCelebration').then(m => ({ default: m.FinalCelebration })));
+// Code splitting: Lazy load below-the-fold sections for instant initial loading
 const HiddenHeartSecret = lazy(() => import('./components/HiddenHeartSecret').then(m => ({ default: m.HiddenHeartSecret })));
+const MemoriesGallerySection = lazy(() => import('./components/MemoriesGallerySection').then(m => ({ default: m.MemoriesGallerySection })));
+const LoveLetter = lazy(() => import('./components/LoveLetter').then(m => ({ default: m.LoveLetter })));
+const BeginningOfForeverSection = lazy(() => import('./components/BeginningOfForeverSection').then(m => ({ default: m.BeginningOfForeverSection })));
+const FlowerBoutique = lazy(() => import('./components/FlowerBoutique').then(m => ({ default: m.FlowerBoutique })));
+const OrbitingHeart3D = lazy(() => import('./components/OrbitingHeart3D').then(m => ({ default: m.OrbitingHeart3D })));
+const AncientNotesCollection = lazy(() => import('./components/AncientNotesCollection').then(m => ({ default: m.AncientNotesCollection })));
+const PersonalizedExperiencesSection = lazy(() => import('./components/PersonalizedExperiencesSection').then(m => ({ default: m.PersonalizedExperiencesSection })));
+const MinimalManifestoSection = lazy(() => import('./components/MinimalManifestoSection').then(m => ({ default: m.MinimalManifestoSection })));
+const FinalCelebration = lazy(() => import('./components/FinalCelebration').then(m => ({ default: m.FinalCelebration })));
 
 export default function App() {
   const [hasEntered, setHasEntered] = useState(false);
@@ -57,7 +53,7 @@ export default function App() {
   }, [handlePetalSurge]);
 
   const handleDiscover = useCallback(() => {
-    const el = document.getElementById('story');
+    const el = document.getElementById('introducing');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
@@ -65,7 +61,7 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen text-[#FFF4EA] selection:bg-[#E88CA8]/30 selection:text-[#FFF4EA] overflow-x-hidden">
-      {/* Multi-Layered Atmosphere Background with Pure CSS Gradients */}
+      {/* Multi-Layered Atmosphere Background */}
       <AtmosphereBackground />
 
       {/* Center Background Rose: Exact uploaded background-removed red rose */}
@@ -82,60 +78,63 @@ export default function App() {
         <OpeningExperience onEnter={handleEnterWorld} />
       ) : (
         <div className="relative z-10 transition-opacity duration-700">
-          {/* Top Navigation Bar */}
+          {/* Top Navigation Bar (Tap NAFISA for Secret Name Reveal) */}
           <Navigation onCelebrateClick={handleCelebrateAction} />
 
-          {/* Main Birthday Hero (Loaded immediately) */}
+          {/* SECTION 01 — Cinematic Introduction */}
           <BirthdayHero onDiscover={handleDiscover} />
 
-          {/* Interactive Discovery Guide near the top */}
-          <DiscoveryGuide />
+          {/* SECTION 02 — Introducing Project Nafisa ("MORE THAN JUST A WEBSITE...") */}
+          <WebsiteShowcaseSection />
 
-          {/* Below-the-fold components with smooth Suspense boundary */}
+          {/* Below-the-fold sections with smooth Suspense boundary */}
           <Suspense fallback={<div className="min-h-[120px]" />}>
-            {/* Secret Keepsake Button */}
+            {/* Floating Secret Keepsake Button */}
             <HiddenHeartSecret />
 
-            {/* Part 4 Emotional Messages: "IF I COULD TELL YOU ONE THING..." */}
-            <EmotionalStory />
+            <SectionDivider subtle />
 
-            {/* Grand Birthday Celebration */}
-            <CelebrationScene />
+            {/* SECTION 03 — Our Memories Split Editorial & 6-Photo Gallery */}
+            <MemoriesGallerySection />
 
-            {/* Interactive 3D Birthday Cake */}
-            <BirthdayCake />
+            <SectionDivider />
 
-            {/* Interactive Love Buttons: "DISCOVER MY HEART" */}
-            <InteractiveLoveButtons />
-
-            {/* Advanced 3D Love Heart Animation & Orbiting Satellites */}
-            <OrbitingHeart3D />
-
-            {/* Love Letter 2.0 with Satin Ribbon, Roses & Line-by-Line Reveal */}
+            {/* SECTION 04 — Love Letter Split Editorial & Ancient Parchment */}
             <LoveLetter />
 
-            {/* PART 2 & PART 5: "A LITTLE PIECE OF MY HEART" */}
-            <PieceOfMyHeart onPetalSurge={handlePetalSurge} />
+            <SectionDivider />
 
-            {/* Surprise Message Capsules: "OPEN THESE LITTLE PIECES OF LOVE" */}
-            <MessageCapsules />
+            {/* SECTION 05 — The Beginning of Forever & Live Chronometer */}
+            <BeginningOfForeverSection />
 
-            {/* PART 4 Personal Love Message: "THERE'S SOMETHING I WANT TO TELL YOU..." */}
-            <SomethingToTellYou />
+            <SectionDivider />
 
-            {/* Celebration Chronometer: "EVERY SECOND IS A REASON TO CELEBRATE YOU" */}
-            <CelebrationClock />
+            {/* Luxury Romantic Flower Boutique & Curated Bouquets */}
+            <FlowerBoutique />
 
-            {/* Romantic Love Quote Generator: "A LITTLE LOVE, A LITTLE MAGIC" */}
-            <LoveQuoteGenerator />
+            <SectionDivider />
 
-            {/* Special Surprise Reveal Gift Box */}
-            <SurpriseGift />
+            {/* SECTION 06 — Interactive Breaking Heart Note Reveal */}
+            <OrbitingHeart3D />
 
-            {/* Celestial Radiance: "LIGHT UP YOUR HAPPINESS" */}
-            <LoveFireworks onPetalSurge={handlePetalSurge} />
+            <SectionDivider />
 
-            {/* Final Emotional Message & Replayable Grand Celebration */}
+            {/* SECTION 07 — Ancient Love Note Collection (All 4 Preserved Templates) */}
+            <AncientNotesCollection />
+
+            <SectionDivider />
+
+            {/* SECTION 08 — Personalized Experiences Showcase & Interactive Keepsakes */}
+            <PersonalizedExperiencesSection onPetalSurge={handlePetalSurge} />
+
+            <SectionDivider />
+
+            {/* SECTION 09 — Minimal Emotional Statement */}
+            <MinimalManifestoSection />
+
+            <SectionDivider subtle />
+
+            {/* SECTION 10 — Final Romantic Message & Forever Celebration */}
             <FinalCelebration onPetalSurge={handlePetalSurge} />
           </Suspense>
         </div>

@@ -1,205 +1,315 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Heart, Sparkles, RotateCcw } from 'lucide-react';
+import { VintageLetterCard } from './VintageLetterCard';
+import { birthdayConfig } from '../config/birthdayConfig';
+
+type RevealPhase = 'idle' | 'cracking' | 'opened';
 
 export const OrbitingHeart3D: React.FC = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [phase, setPhase] = useState<RevealPhase>('idle');
+  const prefersReducedMotion = useReducedMotion();
 
-  const handleHeartClick = () => {
-    setIsExpanded(true);
+  const handleHeartBreak = () => {
+    if (phase !== 'idle') return;
 
-    // Heart explosion confetti
-    confetti({
-      particleCount: 50,
-      spread: 90,
-      origin: { y: 0.6 },
-      colors: ['#E88CA8', '#F7C5D0', '#D9B76E', '#FFF4EA', '#bd244b'],
-      scalar: 1.15,
-    });
+    if (prefersReducedMotion) {
+      setPhase('opened');
+      return;
+    }
+
+    setPhase('cracking');
+
+    setTimeout(() => {
+      setPhase('opened');
+      confetti({
+        particleCount: 45,
+        spread: 85,
+        origin: { y: 0.58 },
+        colors: ['#D9B76E', '#FFE9B5', '#9E1938', '#FFF4EA'],
+        scalar: 1.05,
+        disableForReducedMotion: true,
+      });
+    }, 420);
   };
 
   const handleReset = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsExpanded(false);
+    setPhase('idle');
   };
 
-  const orbitingHearts = [
-    { id: 1, radius: 120, speed: 8, delay: 0, size: 20, color: '#E88CA8' },
-    { id: 2, radius: 155, speed: 10, delay: 1.5, size: 16, color: '#D9B76E' },
-    { id: 3, radius: 185, speed: 12, delay: 3, size: 22, color: '#F7C5D0' },
-  ];
+  const isOpened = phase === 'opened';
+  const isCracking = phase === 'cracking';
 
   return (
-    <section className="relative py-28 px-4 overflow-hidden">
-      {/* Background Radiance */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[550px] rounded-full bg-gradient-to-tr from-[#bd244b]/20 via-[#D9B76E]/15 to-transparent blur-[130px] pointer-events-none" />
+    <section id="heart-reveal" className="relative py-10 sm:py-14 px-4 overflow-hidden">
+      {/* Deep Cinematic Crimson & Gold Ambient Lighting */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[420px] rounded-full opacity-35 blur-[110px] pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(circle, rgba(160, 18, 48, 0.55) 0%, rgba(217, 183, 110, 0.16) 45%, transparent 72%)',
+        }}
+      />
 
-      <div className="relative max-w-4xl mx-auto text-center space-y-10 z-10">
+      <div className="relative max-w-4xl mx-auto text-center space-y-5 z-10">
         {/* Section Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="space-y-3"
+          transition={{ duration: 0.7 }}
+          className="space-y-1.5"
         >
-          <span className="font-script text-3xl sm:text-4xl text-[#F7C5D0]">
+          <span className="font-script text-3xl sm:text-4xl text-[#D9B76E]">
             The Heart of the Celebration
           </span>
 
-          <h2 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-wider text-[#FFF4EA]">
-            A Beating World for Nafisa
+          <h2 className="font-playfair text-3xl sm:text-5xl font-bold uppercase tracking-wider text-[#FFF4EA]">
+            Inside My Heart
           </h2>
-
-          <p className="text-sm sm:text-base text-[#FFF4EA]/75 max-w-md mx-auto font-light">
-            Touch the glowing heart to release the love orbiting within.
-          </p>
         </motion.div>
 
-        {/* 3D Heart & Orbital System */}
-        <div className="relative py-12 flex items-center justify-center min-h-[380px]">
-          {/* Orbiting Satellites (Rendered when not expanded) */}
-          {!isExpanded &&
-            orbitingHearts.map((orb) => (
-              <motion.div
-                key={orb.id}
-                animate={{ rotate: 360 }}
-                transition={{
-                  duration: orb.speed,
-                  repeat: Infinity,
-                  ease: 'linear',
-                  delay: orb.delay,
-                }}
-                className="absolute pointer-events-none"
-                style={{
-                  width: `${orb.radius * 2}px`,
-                  height: `${orb.radius * 2}px`,
-                }}
-              >
-                <div
-                  className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                  style={{
-                    filter: `drop-shadow(0 0 8px ${orb.color})`,
-                  }}
-                >
-                  <svg
-                    width={orb.size}
-                    height={orb.size}
-                    viewBox="0 0 24 24"
-                    fill={orb.color}
-                    stroke="none"
-                  >
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                  </svg>
-                </div>
-              </motion.div>
-            ))}
-
-          {/* Central 3D Glowing Heart */}
-          <motion.div
-            onClick={handleHeartClick}
-            animate={
-              isExpanded
-                ? { scale: [1, 1.2, 1.12], rotate: [0, 2, -2, 0] }
-                : { scale: [1, 1.08, 1, 1.05, 1] }
-            }
-            transition={{
-              scale: { duration: isExpanded ? 0.7 : 2.5, repeat: isExpanded ? 0 : Infinity, ease: 'easeInOut' },
-            }}
-            whileHover={{ scale: 1.1, cursor: 'pointer' }}
-            className="relative z-20 group drop-shadow-[0_0_25px_rgba(232,140,168,0.6)]"
-            title="Click the heart!"
-          >
-            {/* Ambient Aura */}
-            <div className="absolute -inset-8 rounded-full bg-radial from-[#E88CA8]/30 via-[#D9B76E]/20 to-transparent blur-xl pointer-events-none" />
-
-            {/* Realistic 3D SVG Heart */}
-            <svg
-              className="w-36 h-36 sm:w-44 sm:h-44 transition-transform duration-300 group-hover:scale-105"
-              viewBox="0 0 100 100"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                {/* 3D Volumetric Radial Gradient */}
-                <radialGradient id="heart3dGrad" cx="35%" cy="30%" r="65%">
-                  <stop offset="0%" stopColor="#FFF0F5" />
-                  <stop offset="25%" stopColor="#f48fb1" />
-                  <stop offset="60%" stopColor="#c2185b" />
-                  <stop offset="90%" stopColor="#880e4f" />
-                  <stop offset="100%" stopColor="#3e0719" />
-                </radialGradient>
-                {/* Gold rim sheen */}
-                <linearGradient id="goldSheen" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#FFF4EA" stopOpacity="0.8" />
-                  <stop offset="50%" stopColor="#D9B76E" stopOpacity="0.5" />
-                  <stop offset="100%" stopColor="transparent" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-
-              {/* Heart Path */}
-              <path
-                d="M50 88 C20 62 4 44 4 26 C4 13 14 4 27 4 C36 4 45 9 50 17 C55 9 64 4 73 4 C86 4 96 13 96 26 C96 44 80 62 50 88 Z"
-                fill="url(#heart3dGrad)"
-                stroke="#D9B76E"
-                strokeWidth="1.2"
-                style={{ filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.6))' }}
-              />
-
-              {/* Specular curved highlight on top-left lobe */}
-              <path
-                d="M26 10 C18 10 12 16 12 24 C12 30 16 38 22 46"
-                stroke="url(#goldSheen)"
-                strokeWidth="3"
-                strokeLinecap="round"
-                fill="none"
-              />
-            </svg>
-          </motion.div>
-        </div>
-
-        {/* Revealed Quote & Interaction Result */}
-        <div className="min-h-[140px] flex items-center justify-center">
+        {/* Breaking Heart & Centered Antique Note Reveal Stage */}
+        <div className="relative py-4 flex flex-col items-center justify-center min-h-[250px]">
+          {/* Warm Golden Light Emitting From Center When Cracking/Open */}
           <AnimatePresence>
-            {isExpanded && (
+            {(isCracking || isOpened) && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.88, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.88, y: 20 }}
+                initial={{ opacity: 0, scale: 0.4 }}
+                animate={{ opacity: isOpened ? 0.85 : 0.65, scale: isOpened ? 1.35 : 0.95 }}
+                exit={{ opacity: 0, scale: 0.4 }}
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className="relative max-w-2xl w-full p-8 rounded-3xl bg-gradient-to-b from-[#2e1024] via-[#240e1d] to-[#150612] border-2 border-[#D9B76E]/60 shadow-[0_0_50px_rgba(217,183,110,0.3)] space-y-5"
-              >
-                <div className="flex justify-center text-[#D9B76E]">
-                  <Sparkles className="w-6 h-6 animate-pulse" />
-                </div>
-
-                <h3 className="font-playfair text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider gold-gradient-text uppercase leading-snug">
-                  &ldquo;IF I COULD SEND YOU ONE THING, IT WOULD BE ALL THE HAPPINESS YOUR HEART CAN HOLD.&rdquo;
-                </h3>
-
-                <p className="font-cormorant italic text-lg sm:text-xl text-[#F7C5D0]">
-                  Every pulse of this heart carries my warmest thoughts for you, Nafisa.
-                </p>
-
-                <div>
-                  <button
-                    onClick={handleReset}
-                    className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase text-[#FFF4EA] border border-[#D9B76E]/50 hover:bg-[#D9B76E]/15 transition-colors cursor-pointer"
-                  >
-                    <RotateCcw className="w-3.5 h-3.5" />
-                    <span>Send Another Pulse</span>
-                  </button>
-                </div>
-              </motion.div>
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 rounded-full pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(circle, rgba(255, 232, 168, 0.48) 0%, rgba(217, 183, 110, 0.22) 42%, transparent 72%)',
+                }}
+              />
             )}
           </AnimatePresence>
 
-          {!isExpanded && (
-            <p className="text-xs text-[#FFF4EA]/50 italic">
-              Click the center heart to send love outward across the stars.
-            </p>
-          )}
+          {/* Split 3D Crimson Heart Visual */}
+          <div
+            className={`relative flex items-center justify-center transition-all duration-700 ${
+              isOpened ? 'mb-4 sm:mb-0' : ''
+            }`}
+          >
+            <button
+              type="button"
+              onClick={handleHeartBreak}
+              disabled={phase !== 'idle'}
+              aria-label="Tap the glowing crimson heart to open the love note inside"
+              className={`relative group focus:outline-none ${
+                phase === 'idle' ? 'cursor-pointer' : 'cursor-default'
+              }`}
+            >
+              {/* Soft Pulsing Crimson Halo (Idle) */}
+              {!isOpened && (
+                <div
+                  className="absolute -inset-6 rounded-full pointer-events-none transition-opacity duration-500"
+                  style={{
+                    background:
+                      'radial-gradient(circle, rgba(185, 17, 56, 0.42) 0%, rgba(217, 183, 110, 0.16) 50%, transparent 74%)',
+                  }}
+                />
+              )}
+
+              {/* Seamless Left + Right 3D Crimson Heart Halves */}
+              <motion.div
+                animate={
+                  phase === 'idle' && !prefersReducedMotion
+                    ? { scale: [1, 1.06, 1, 1.09, 1] }
+                    : { scale: 1 }
+                }
+                transition={
+                  phase === 'idle'
+                    ? {
+                        duration: 2.3,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                        times: [0, 0.14, 0.28, 0.42, 1],
+                      }
+                    : { duration: 0.3 }
+                }
+                className="relative w-40 h-40 sm:w-48 sm:h-48 flex items-center justify-center"
+              >
+                {/* Left Heart Half */}
+                <motion.svg
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  animate={
+                    isOpened
+                      ? { x: -96, y: -10, rotate: -14, scale: 0.72, opacity: 0.85 }
+                      : isCracking
+                      ? { x: -3, rotate: -1.5 }
+                      : { x: 0, y: 0, rotate: 0, scale: 1, opacity: 1 }
+                  }
+                  transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 w-full h-full drop-shadow-[0_14px_26px_rgba(0,0,0,0.75)]"
+                >
+                  <defs>
+                    <radialGradient id="crimsonHeartLeft" cx="32%" cy="28%" r="72%">
+                      <stop offset="0%" stopColor="#FF7A96" />
+                      <stop offset="22%" stopColor="#CE1B46" />
+                      <stop offset="60%" stopColor="#850B29" />
+                      <stop offset="90%" stopColor="#4A0415" />
+                      <stop offset="100%" stopColor="#260109" />
+                    </radialGradient>
+                    <linearGradient id="crimsonGoldRimL" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#FFF4D4" stopOpacity="0.85" />
+                      <stop offset="50%" stopColor="#D9B76E" stopOpacity="0.55" />
+                      <stop offset="100%" stopColor="transparent" />
+                    </linearGradient>
+                  </defs>
+
+                  <path
+                    d="M50 88 C20 62 4 44 4 26 C4 13 14 4 27 4 C36 4 45 9 50 17 L47 34 L53 52 L48 70 Z"
+                    fill="url(#crimsonHeartLeft)"
+                    stroke={isCracking || isOpened ? '#FFE49E' : '#D9B76E'}
+                    strokeWidth={isCracking || isOpened ? '1.35' : '0.9'}
+                  />
+                  {/* Specular Volumetric Highlight */}
+                  <path
+                    d="M25 11 C17 11 12 17 12 25 C12 31 16 39 22 47"
+                    stroke="url(#crimsonGoldRimL)"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                </motion.svg>
+
+                {/* Right Heart Half */}
+                <motion.svg
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  animate={
+                    isOpened
+                      ? { x: 96, y: -10, rotate: 14, scale: 0.72, opacity: 0.85 }
+                      : isCracking
+                      ? { x: 3, rotate: 1.5 }
+                      : { x: 0, y: 0, rotate: 0, scale: 1, opacity: 1 }
+                  }
+                  transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 w-full h-full drop-shadow-[0_14px_26px_rgba(0,0,0,0.75)]"
+                >
+                  <defs>
+                    <radialGradient id="crimsonHeartRight" cx="55%" cy="28%" r="72%">
+                      <stop offset="0%" stopColor="#E63960" />
+                      <stop offset="30%" stopColor="#A61135" />
+                      <stop offset="70%" stopColor="#66061D" />
+                      <stop offset="100%" stopColor="#260109" />
+                    </radialGradient>
+                  </defs>
+
+                  <path
+                    d="M50 88 L48 70 L53 52 L47 34 L50 17 C55 9 64 4 73 4 C86 4 96 13 96 26 C96 44 80 62 50 88 Z"
+                    fill="url(#crimsonHeartRight)"
+                    stroke={isCracking || isOpened ? '#FFE49E' : '#D9B76E'}
+                    strokeWidth={isCracking || isOpened ? '1.35' : '0.9'}
+                  />
+                </motion.svg>
+
+                {/* Glowing Golden Center Crack Line during Cracking */}
+                <AnimatePresence>
+                  {isCracking && (
+                    <motion.svg
+                      viewBox="0 0 100 100"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 w-full h-full z-20 pointer-events-none"
+                    >
+                      <motion.path
+                        d="M50 17 L47 34 L53 52 L48 70 L50 88"
+                        stroke="#FFF4CC"
+                        strokeWidth="2.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ duration: 0.35, ease: 'easeOut' }}
+                        style={{ filter: 'drop-shadow(0 0 8px #FFE08A)' }}
+                      />
+                    </motion.svg>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+
+              {/* Initial Instruction Prompt */}
+              {!isOpened && (
+                <motion.div
+                  initial={{ opacity: 0.85 }}
+                  animate={{ opacity: isCracking ? 0 : [0.82, 1, 0.82] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+                  className="mt-4 space-y-1.5"
+                >
+                  <p className="font-playfair text-xs sm:text-sm tracking-[0.26em] uppercase font-semibold text-[#D9B76E]">
+                    CLICK TO DISCOVER WHAT&apos;S INSIDE
+                  </p>
+                  <p className="text-xs text-[#FFF4EA]/65 italic">
+                    There&apos;s an ancient love note waiting inside this heart
+                  </p>
+                </motion.div>
+              )}
+            </button>
+          </div>
+
+          {/* Centered Antique Love Note Emerging Smoothly From Inside the Parted Heart */}
+          <AnimatePresence>
+            {isOpened && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.84, y: 18 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.88, y: 12 }}
+                transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+                className="relative z-20 w-full max-w-xl mx-auto mt-1"
+              >
+                <VintageLetterCard
+                  variant="secret"
+                  showWaxSeal
+                  waxSealLabel="From Inside My Heart"
+                  className="px-6 pb-6 pt-1 sm:px-10 sm:pb-8 text-center"
+                >
+                  <div className="space-y-4 pt-2">
+                    <div className="flex items-center justify-center gap-2 text-[#7A1530]">
+                      <Sparkles className="w-4 h-4" />
+                      <span className="font-cormorant text-xs tracking-[0.28em] uppercase font-bold">
+                        For My Dearest {birthdayConfig.birthdayName}
+                      </span>
+                      <Sparkles className="w-4 h-4" />
+                    </div>
+
+                    <h3 className="font-playfair text-xl sm:text-2xl md:text-3xl font-bold tracking-wide text-[#2A0B14] uppercase leading-snug">
+                      &ldquo;IF I COULD SEND YOU ONE THING, IT WOULD BE ALL THE HAPPINESS YOUR HEART CAN HOLD.&rdquo;
+                    </h3>
+
+                    <p className="font-cormorant italic text-lg sm:text-xl text-[#4D1221] leading-relaxed">
+                      Every pulse of this heart carries my warmest thoughts for you, Nafisa.
+                    </p>
+
+                    <div className="pt-2 border-t border-[#7A1530]/20 flex flex-col sm:flex-row items-center justify-between gap-3">
+                      <span className="font-script text-2xl sm:text-3xl text-[#7A1530]">
+                        With love, {birthdayConfig.creatorName}
+                      </span>
+
+                      <button
+                        type="button"
+                        onClick={handleReset}
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase text-[#5C0E23] border border-[#7A1530]/40 hover:bg-[#7A1530]/10 transition-colors cursor-pointer"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                        <span>Seal Heart Again</span>
+                      </button>
+                    </div>
+                  </div>
+                </VintageLetterCard>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>

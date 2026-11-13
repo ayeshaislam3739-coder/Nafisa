@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Heart, Sparkles, X, Stars, Gift, ShieldCheck, LockOpen } from 'lucide-react';
 import { birthdayConfig, LoveButtonData } from '../config/birthdayConfig';
+import { VintageLetterCard } from './VintageLetterCard';
 
 export const InteractiveLoveButtons: React.FC = () => {
   const [activeButton, setActiveButton] = useState<LoveButtonData | null>(null);
@@ -42,21 +43,21 @@ export const InteractiveLoveButtons: React.FC = () => {
   };
 
   return (
-    <section id="discover-heart" className="relative py-28 px-4 overflow-hidden">
+    <section id="discover-heart" className="relative py-12 sm:py-16 px-4 overflow-hidden">
       {/* Background Soft Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[550px] rounded-full bg-gradient-to-tr from-[#E88CA8]/15 via-[#D9B76E]/12 to-transparent blur-[110px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] h-[420px] rounded-full bg-gradient-to-tr from-[#7A102B]/24 via-[#D9B76E]/12 to-transparent blur-[110px] pointer-events-none" />
 
-      <div className="relative max-w-5xl mx-auto text-center space-y-12 z-10">
+      <div className="relative max-w-5xl mx-auto text-center space-y-7 z-10">
         {/* Section Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="space-y-3"
+          className="space-y-2.5"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E88CA8]/15 border border-[#E88CA8]/35 text-[#F7C5D0] text-xs uppercase tracking-[0.25em] font-semibold">
-            <Heart className="w-3.5 h-3.5 fill-[#E88CA8] text-[#E88CA8]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#9E1938]/20 border border-[#D9B76E]/35 text-[#F7C5D0] text-xs uppercase tracking-[0.25em] font-semibold">
+            <Heart className="w-3.5 h-3.5 fill-[#D9B76E] text-[#D9B76E]" />
             <span>UNLOCK LITTLE PIECES OF MY HEART</span>
             <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
           </div>
@@ -85,10 +86,10 @@ export const InteractiveLoveButtons: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className={`group relative inline-flex items-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer ${
+                className={`group relative inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer ${
                   isSelected
-                    ? 'bg-gradient-to-r from-[#D9B76E] via-[#FFF0D0] to-[#E88CA8] text-[#1a0815] shadow-[0_0_30px_rgba(217,183,110,0.5)]'
-                    : 'bg-[#2b1022]/80 text-[#FFF4EA] border border-[#D9B76E]/40 hover:border-[#D9B76E] shadow-lg'
+                    ? 'bg-gradient-to-r from-[#D9B76E] via-[#FFF0D0] to-[#D9B76E] text-[#1a0815] shadow-[0_0_28px_rgba(217,183,110,0.48)]'
+                    : 'bg-[#1D040D]/90 text-[#FFF4EA] border border-[#D9B76E]/40 hover:border-[#D9B76E] shadow-lg'
                 }`}
               >
                 <span className={isSelected ? 'text-[#6e112c]' : 'text-[#D9B76E] group-hover:scale-125 transition-transform'}>
@@ -101,46 +102,49 @@ export const InteractiveLoveButtons: React.FC = () => {
           })}
         </div>
 
-        {/* Inline Message Reveal Card (for Buttons 1-4) */}
-        <div className="min-h-[160px] flex items-center justify-center">
+        {/* Inline Antique Parchment Reveal Card (for Buttons 1-4) */}
+        <div className="flex items-center justify-center pt-1">
           <AnimatePresence mode="wait">
             {activeButton && !activeButton.isFullScreen && (
               <motion.div
                 key={activeButton.id}
-                initial={{ opacity: 0, y: 25, scale: 0.94 }}
+                initial={{ opacity: 0, y: 20, scale: 0.94 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 0.94 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="relative max-w-xl w-full p-8 rounded-3xl bg-gradient-to-b from-[#2e1024] via-[#240e1d] to-[#150612] border-2 border-[#D9B76E]/50 shadow-2xl space-y-4"
+                exit={{ opacity: 0, y: -16, scale: 0.94 }}
+                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                className="relative max-w-xl w-full"
               >
-                <div className="flex justify-between items-center border-b border-[#D9B76E]/20 pb-3">
-                  <div className="flex items-center gap-2 text-[#D9B76E]">
-                    {getIcon(activeButton.id)}
-                    <span className="font-cormorant text-xs tracking-[0.25em] uppercase font-bold">
-                      {activeButton.title}
-                    </span>
+                <VintageLetterCard variant="secret" className="p-6 sm:p-8 space-y-4">
+                  <div className="flex justify-between items-center border-b border-[#7A1530]/20 pb-3">
+                    <div className="flex items-center gap-2 text-[#7A1530]">
+                      {getIcon(activeButton.id)}
+                      <span className="font-cormorant text-xs tracking-[0.25em] uppercase font-bold">
+                        {activeButton.title}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => setActiveButton(null)}
+                      className="p-1.5 rounded-full text-[#5C1225]/70 hover:text-[#2A0B14] hover:bg-[#7A1530]/10 transition-colors cursor-pointer"
+                      aria-label="Close secret note"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
                   </div>
-                  <button
-                    onClick={() => setActiveButton(null)}
-                    className="p-1 rounded-full text-white/60 hover:text-white"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
 
-                <p className="font-cormorant italic text-xl sm:text-2xl text-[#FFF4EA] leading-relaxed">
-                  &ldquo;{activeButton.message}&rdquo;
-                </p>
+                  <p className="font-cormorant italic text-xl sm:text-2xl text-[#260B12] leading-relaxed font-medium">
+                    &ldquo;{activeButton.message}&rdquo;
+                  </p>
 
-                <p className="text-right font-script text-xl text-[#E88CA8]">
-                  From Abdul Ahad to Nafisa
-                </p>
+                  <p className="text-right font-script text-2xl text-[#7A1530]">
+                    From Abdul Ahad to Nafisa
+                  </p>
+                </VintageLetterCard>
               </motion.div>
             )}
           </AnimatePresence>
 
           {!activeButton && (
-            <p className="text-xs text-[#FFF4EA]/50 italic">
+            <p className="text-xs text-[#FFF4EA]/55 italic py-2">
               Tap any heart button above to reveal what lies within.
             </p>
           )}
@@ -154,57 +158,54 @@ export const InteractiveLoveButtons: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-radial from-[#3d0e28]/95 via-[#1a081a]/98 to-[#0b030b] backdrop-blur-xl"
+            className="fixed inset-0 z-50 flex items-center justify-center p-5 sm:p-6 bg-black/90 backdrop-blur-xl"
             onClick={() => setFullScreenActive(null)}
           >
             {/* Background pulsating aura */}
-            <div className="absolute w-[500px] h-[500px] rounded-full bg-[#E88CA8]/20 blur-[140px] pointer-events-none" />
+            <div className="absolute w-[480px] h-[480px] rounded-full bg-[#9E1938]/22 blur-[130px] pointer-events-none" />
 
             <motion.div
-              initial={{ scale: 0.85, y: 30 }}
+              initial={{ scale: 0.86, y: 24 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.85, y: 30 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ scale: 0.86, y: 24 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-2xl w-full text-center p-8 sm:p-14 rounded-3xl bg-gradient-to-b from-[#2e1024] to-[#150612] border-2 border-[#D9B76E]/60 shadow-[0_0_60px_rgba(217,183,110,0.3)] space-y-8"
+              className="relative max-w-2xl w-full"
             >
-              {/* Close Button */}
-              <button
-                onClick={() => setFullScreenActive(null)}
-                className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-[#FFF4EA] transition-colors cursor-pointer"
+              <VintageLetterCard
+                variant="secret"
+                showWaxSeal
+                waxSealLabel="Unsealed For Nafisa"
+                className="p-6 sm:p-12 text-center space-y-6"
               >
-                <X className="w-5 h-5" />
-              </button>
-
-              {/* Glowing Heart Emblem */}
-              <div className="flex justify-center">
-                <motion.div
-                  animate={{ scale: [1, 1.25, 1], rotate: [0, 5, -5, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                  className="w-20 h-20 rounded-full bg-gradient-to-br from-[#8c1839] via-[#610a22] to-[#30030e] border-2 border-[#D9B76E] shadow-[0_0_30px_rgba(232,140,168,0.5)] flex items-center justify-center"
+                {/* Close Button */}
+                <button
+                  onClick={() => setFullScreenActive(null)}
+                  className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-[#7A1530]/10 hover:bg-[#7A1530]/20 text-[#4D0E1F] transition-colors cursor-pointer"
+                  aria-label="Close heart note"
                 >
-                  <Heart className="w-10 h-10 fill-[#E88CA8] text-[#E88CA8]" />
-                </motion.div>
-              </div>
+                  <X className="w-5 h-5" />
+                </button>
 
-              <div className="space-y-4">
-                <p className="font-cormorant text-xs tracking-[0.35em] uppercase text-[#D9B76E] font-bold">
-                  A Message from the Heart · For Nafisa
-                </p>
+                <div className="space-y-3 pt-1">
+                  <p className="font-cormorant text-xs tracking-[0.32em] uppercase text-[#7A1530] font-bold">
+                    A Message from the Heart · For Nafisa
+                  </p>
 
-                <h3 className="font-playfair text-2xl sm:text-4xl md:text-5xl font-bold text-[#FFF4EA] leading-tight">
-                  &ldquo;{fullScreenActive.message}&rdquo;
-                </h3>
-              </div>
+                  <h3 className="font-playfair text-2xl sm:text-4xl font-bold text-[#240910] leading-tight">
+                    &ldquo;{fullScreenActive.message}&rdquo;
+                  </h3>
+                </div>
 
-              <div className="pt-4 border-t border-[#D9B76E]/30 space-y-1">
-                <p className="font-cormorant italic text-base text-[#F7C5D0]">
-                  With all my respect, care, and love,
-                </p>
-                <p className="font-script text-3xl sm:text-4xl text-[#D9B76E]">
-                  Abdul Ahad
-                </p>
-              </div>
+                <div className="pt-4 border-t border-[#7A1530]/25 space-y-1">
+                  <p className="font-cormorant italic text-base text-[#5C1225]">
+                    With all my respect, care, and love,
+                  </p>
+                  <p className="font-script text-3xl sm:text-4xl text-[#7A1530]">
+                    Abdul Ahad
+                  </p>
+                </div>
+              </VintageLetterCard>
             </motion.div>
           </motion.div>
         )}

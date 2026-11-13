@@ -39,11 +39,11 @@ export const OpeningExperience: React.FC<OpeningExperienceProps> = ({ onEnter })
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-radial from-[#320e23] via-[#1c0b1d] to-[#0d040e]"
+          className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-radial from-[#2b0612] via-[#130309] to-[#050103]"
         >
           {/* Subtle glowing halo */}
-          <div className="absolute w-[340px] h-[340px] rounded-full bg-[#E88CA8]/10 blur-2xl pointer-events-none" />
-          <div className="absolute w-[260px] h-[260px] rounded-full bg-[#D9B76E]/10 blur-xl pointer-events-none" />
+          <div className="absolute w-[340px] h-[340px] rounded-full bg-[#9E1938]/18 blur-2xl pointer-events-none" />
+          <div className="absolute w-[260px] h-[260px] rounded-full bg-[#D9B76E]/12 blur-xl pointer-events-none" />
 
           {/* Floating subtle ambient heart dust */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -66,7 +66,7 @@ export const OpeningExperience: React.FC<OpeningExperienceProps> = ({ onEnter })
                   delay: i * 2,
                   ease: 'linear',
                 }}
-                className="absolute text-[#E88CA8]/25"
+                className="absolute text-[#9E1938]/35"
               >
                 <Heart className="w-4 h-4 fill-current" />
               </motion.div>
@@ -79,7 +79,7 @@ export const OpeningExperience: React.FC<OpeningExperienceProps> = ({ onEnter })
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 1, ease: 'easeOut' }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D9B76E]/30 bg-[#2b1022]/60 backdrop-blur-md shadow-lg shadow-[#400D24]/40"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D9B76E]/35 bg-[#1b040c]/75 backdrop-blur-md shadow-lg shadow-black/60"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#D9B76E]" />
               <span className="text-xs tracking-[0.25em] uppercase text-[#D9B76E]/90 font-medium">

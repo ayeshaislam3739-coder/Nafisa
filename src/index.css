@@ -67,14 +67,14 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #1a0a18;
+  background: #080205;
 }
 ::-webkit-scrollbar-thumb {
   background: #400D24;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #E88CA8;
+  background: #9E1938;
 }
 
 /* Lightweight star twinkle */

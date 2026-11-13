@@ -84,7 +84,7 @@ export const CelebrationScene: React.FC = () => {
   };
 
   return (
-    <section id="celebration" className="relative py-24 px-4 overflow-hidden">
+    <section id="celebration" className="relative py-12 sm:py-16 px-4 overflow-hidden">
       {/* Floating Interactive Balloons */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {balloons.map((b) =>
@@ -121,7 +121,7 @@ export const CelebrationScene: React.FC = () => {
         )}
       </div>
 
-      <div className="relative max-w-4xl mx-auto text-center space-y-10 z-10">
+      <div className="relative max-w-4xl mx-auto text-center space-y-7 z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -152,7 +152,7 @@ export const CelebrationScene: React.FC = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="p-7 sm:p-10 rounded-3xl bg-[#2e1024]/60 border border-[#D9B76E]/35 backdrop-blur-md shadow-2xl space-y-7 max-w-2xl mx-auto"
+          className="p-6 sm:p-9 rounded-2xl bg-gradient-to-b from-[#1E050E]/85 via-[#130309]/92 to-[#0A0105]/95 border border-[#D9B76E]/40 backdrop-blur-md shadow-2xl space-y-5 max-w-2xl mx-auto"
         >
           <div className="flex items-center justify-center gap-3 text-[#D9B76E]">
             <Sparkles className="w-4 h-4 animate-pulse" />

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { Heart, X, Sparkles } from 'lucide-react';
 import { birthdayConfig } from '../config/birthdayConfig';
+import { VintageLetterCard } from './VintageLetterCard';
 
 export const HiddenHeartSecret: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,11 +28,11 @@ export const HiddenHeartSecret: React.FC = () => {
         <button
           onClick={handleOpen}
           aria-label="A subtle glowing keepsake"
-          className="group relative p-2.5 rounded-full bg-[#240e1d]/70 hover:bg-[#34122b] border border-[#D9B76E]/30 hover:border-[#D9B76E] backdrop-blur-xs transition-all duration-300 shadow-md cursor-pointer"
+          className="group relative p-2.5 rounded-full bg-[#1C040C]/85 hover:bg-[#310816] border border-[#D9B76E]/40 hover:border-[#D9B76E] backdrop-blur-xs transition-all duration-300 shadow-lg cursor-pointer"
           title="A little secret..."
         >
-          <span className="absolute -inset-1 rounded-full bg-[#E88CA8] opacity-25 blur-xs group-hover:opacity-60 transition-opacity animate-pulse" />
-          <Heart className="w-4 h-4 fill-[#E88CA8]/70 text-[#E88CA8] group-hover:fill-[#E88CA8] group-hover:scale-110 transition-transform" />
+          <span className="absolute -inset-1 rounded-full bg-[#9E1938] opacity-30 blur-xs group-hover:opacity-65 transition-opacity animate-pulse" />
+          <Heart className="w-4 h-4 fill-[#D9B76E]/80 text-[#D9B76E] group-hover:scale-110 transition-transform" />
         </button>
       </div>
 
@@ -42,63 +43,57 @@ export const HiddenHeartSecret: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/92 backdrop-blur-2xl"
+            transition={{ duration: 0.6 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-5 sm:p-6 bg-black/92 backdrop-blur-2xl"
             onClick={() => setIsOpen(false)}
           >
-            {/* Cinematic Large Radiant 3D Heart in Center */}
             <motion.div
-              initial={{ scale: 0.8, y: 30 }}
+              initial={{ scale: 0.85, y: 24 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.8, y: 30 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ scale: 0.85, y: 24 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-2xl w-full text-center p-8 sm:p-14 rounded-3xl bg-gradient-to-b from-[#330f28] via-[#200a1b] to-[#0d030c] border-2 border-[#D9B76E]/60 shadow-[0_0_80px_rgba(232,140,168,0.3)] space-y-8"
+              className="relative max-w-2xl w-full"
             >
-              {/* Close Button */}
-              <button
-                onClick={() => setIsOpen(false)}
-                className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-[#FFF4EA] transition-colors cursor-pointer"
+              <VintageLetterCard
+                variant="secret"
+                showWaxSeal
+                waxSealLabel="The Secret Kept For You"
+                className="p-6 sm:p-12 text-center space-y-6"
               >
-                <X className="w-5 h-5" />
-              </button>
-
-              {/* Glowing Heart Icon */}
-              <div className="flex justify-center">
-                <motion.div
-                  animate={{
-                    scale: [1, 1.15, 1, 1.1, 1],
-                  }}
-                  transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                  className="w-24 h-24 rounded-full bg-gradient-to-br from-[#8c1839] via-[#610a22] to-[#30030e] border-2 border-[#D9B76E] shadow-2xl flex items-center justify-center drop-shadow-[0_0_20px_rgba(232,140,168,0.7)]"
+                {/* Close Button */}
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-[#7A1530]/10 hover:bg-[#7A1530]/20 text-[#4D0E1F] transition-colors cursor-pointer"
+                  aria-label="Close secret"
                 >
-                  <Heart className="w-12 h-12 fill-[#E88CA8] text-[#E88CA8]" />
-                </motion.div>
-              </div>
+                  <X className="w-5 h-5" />
+                </button>
 
-              {/* Secret Messages */}
-              <div className="space-y-5">
-                <div className="inline-flex items-center gap-2 text-xs tracking-[0.3em] uppercase font-bold text-[#D9B76E]">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>The Secret Kept for You</span>
-                  <Sparkles className="w-3.5 h-3.5" />
+                {/* Secret Messages */}
+                <div className="space-y-4 pt-1">
+                  <div className="inline-flex items-center gap-2 text-xs tracking-[0.28em] uppercase font-bold text-[#7A122E]">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Written For Your Eyes Only</span>
+                    <Sparkles className="w-3.5 h-3.5" />
+                  </div>
+
+                  <h3 className="font-playfair text-2xl sm:text-3xl md:text-4xl font-bold text-[#240910] leading-relaxed uppercase">
+                    &ldquo;{secret.message1}&rdquo;
+                  </h3>
+
+                  <p className="font-cormorant italic text-xl sm:text-2xl text-[#5C1225] pt-1 font-medium">
+                    &ldquo;{secret.message2}&rdquo;
+                  </p>
                 </div>
 
-                <h3 className="font-playfair text-2xl sm:text-3xl md:text-4xl font-bold text-[#FFF4EA] leading-relaxed uppercase gold-gradient-text">
-                  &ldquo;{secret.message1}&rdquo;
-                </h3>
-
-                <p className="font-cormorant italic text-xl sm:text-2xl text-[#F7C5D0] pt-2">
-                  &ldquo;{secret.message2}&rdquo;
-                </p>
-              </div>
-
-              {/* Signature */}
-              <div className="pt-4 border-t border-[#D9B76E]/30 text-right">
-                <p className="font-script text-3xl sm:text-4xl text-[#D9B76E]">
-                  {secret.signature}
-                </p>
-              </div>
+                {/* Signature */}
+                <div className="pt-4 border-t border-[#7A1530]/25 text-right">
+                  <p className="font-script text-3xl sm:text-4xl text-[#7A122E]">
+                    {secret.signature}
+                  </p>
+                </div>
+              </VintageLetterCard>
             </motion.div>
           </motion.div>
         )}
